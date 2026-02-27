@@ -76,7 +76,9 @@ export default function Dashboard() {
             setLoadingWeather(true);
             setWeatherError(null);
             try {
-                const data = await weatherService.getCurrentWeather(profile.location);
+                const response = await weatherService.getCurrentWeather(profile.location);
+                // Backend returns { success: true, data: {...} } - unwrap it
+                const data = response.data || response;
                 setWeatherData(data);
             } catch (error) {
                 console.error('Error fetching weather:', error);
@@ -104,8 +106,10 @@ export default function Dashboard() {
             try {
                 // Fetch prices for first crop (or primary crop)
                 const primaryCrop = Array.isArray(profile.crops) ? profile.crops[0] : profile.crops;
-                const data = await marketService.getCurrentPrices(primaryCrop, profile.location);
-                setMarketData(data);
+                const latitude = profile?.latitude || 28.6139;
+                const longitude = profile?.longitude || 77.2090;
+                const response = await marketService.getMarketIntelligence(primaryCrop, latitude, longitude, 100);
+                setMarketData(response);
             } catch (error) {
                 console.error('Error fetching market data:', error);
                 setMarketError('Failed to load market data');
@@ -248,7 +252,7 @@ export default function Dashboard() {
                 />
                 <StatsCard
                     title={t('dashboard.weatherStatus')}
-                    value={weatherData?.current?.condition || t('dashboard.noData')}
+                    value={weatherData?.description || weatherData?.condition || weatherData?.current?.condition || t('dashboard.noData')}
                     icon={FaCloudSun}
                     color="purple"
                     link="/weather"
