@@ -101,15 +101,24 @@ export default function Dashboard() {
         const fetchMarket = async () => {
             if (!profile?.crops || profile.crops.length === 0) return;
 
+            // Check if user has location coordinates
+            if (!profile?.location_lat || !profile?.location_lng) {
+                setMarketError('Location coordinates required for market data');
+                setLoadingMarket(false);
+                return;
+            }
+
             setLoadingMarket(true);
             setMarketError(null);
             try {
                 // Fetch prices for first crop (or primary crop)
                 const primaryCrop = Array.isArray(profile.crops) ? profile.crops[0] : profile.crops;
-                const latitude = profile?.latitude || 28.6139;
-                const longitude = profile?.longitude || 77.2090;
-                const response = await marketService.getMarketIntelligence(primaryCrop, latitude, longitude, 100);
-                setMarketData(response);
+                const data = await marketService.getCurrentPrices(
+                    primaryCrop,
+                    profile.location_lat,
+                    profile.location_lng
+                );
+                setMarketData(data);
             } catch (error) {
                 console.error('Error fetching market data:', error);
                 setMarketError('Failed to load market data');
@@ -121,7 +130,7 @@ export default function Dashboard() {
         if (dashboardPreferences.widgets.includes('market')) {
             fetchMarket();
         }
-    }, [profile?.crops, profile?.location, dashboardPreferences.widgets]);
+    }, [profile?.crops, profile?.location_lat, profile?.location_lng, dashboardPreferences.widgets]);
 
     /**
      * Fetch scheme recommendations
