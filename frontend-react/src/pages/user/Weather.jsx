@@ -124,7 +124,7 @@ export default function Weather() {
             setCurrentWeather(data);
         } catch (err) {
             console.error('Error fetching current weather:', err);
-            setError('Failed to load current weather data');
+            setError(t('weatherErrors.failedLoadCurrent'));
         } finally {
             setLoadingCurrent(false);
         }
@@ -143,7 +143,7 @@ export default function Weather() {
             setForecast({ daily: data });
         } catch (err) {
             console.error('Error fetching forecast:', err);
-            setError('Failed to load forecast data');
+            setError(t('weatherErrors.failedLoadForecast'));
         } finally {
             setLoadingForecast(false);
         }
@@ -241,7 +241,7 @@ export default function Weather() {
             labels,
             datasets: [
                 {
-                    label: 'Max Temperature (°C)',
+                    label: t('weatherErrors.maxTemp'),
                     data: maxTemps,
                     borderColor: 'rgb(239, 68, 68)',
                     backgroundColor: 'rgba(239, 68, 68, 0.1)',
@@ -249,7 +249,7 @@ export default function Weather() {
                     tension: 0.4,
                 },
                 {
-                    label: 'Min Temperature (°C)',
+                    label: t('weatherErrors.minTemp'),
                     data: minTemps,
                     borderColor: 'rgb(59, 130, 246)',
                     backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -269,7 +269,7 @@ export default function Weather() {
             },
             title: {
                 display: true,
-                text: '7-Day Temperature Forecast',
+                text: t('weatherErrors.chartTitle'),
             },
         },
         scales: {

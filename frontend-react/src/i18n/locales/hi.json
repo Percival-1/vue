@@ -543,6 +543,154 @@
         "bicycling": "साइकिल",
         "bicyclingDesc": "साइकिल लेन और मार्गों सहित साइकिल के लिए उपयुक्त मार्गों की गणना करता है।",
         "transit": "पारगमन",
-        "transitDesc": "बसों, ट्रेनों और मेट्रो जैसे सार्वजनिक परिवहन का उपयोग करके मार्गों की गणना करता है।"
+        "transitDesc": "बसों, ट्रेनों और मेट्रो जैसे सार्वजनिक परिवहन का उपयोग करके मार्गों की गणना करता है।",
+        "enterLocation": "कृपया एक स्थान दर्ज करें",
+        "selectBothPoints": "कृपया मूल और गंतव्य दोनों का चयन करें"
+    },
+    "profilePage": {
+        "myProfile": "मेरी प्रोफ़ाइल",
+        "manageInfo": "अपनी व्यक्तिगत जानकारी और प्राथमिकताएं प्रबंधित करें",
+        "profileUpdatedSuccess": "प्रोफ़ाइल सफलतापूर्वक अपडेट की गई!",
+        "profileCompletion": "प्रोफ़ाइल पूर्णता",
+        "missingInfo": "गायब जानकारी:",
+        "profileComplete": "आपकी प्रोफ़ाइल पूरी है!",
+        "profileInfo": "प्रोफ़ाइल जानकारी",
+        "editProfile": "प्रोफ़ाइल संपादित करें",
+        "fullName": "पूरा नाम",
+        "notProvided": "प्रदान नहीं किया गया",
+        "phoneNumber": "फ़ोन नंबर",
+        "location": "स्थान",
+        "coordinates": "निर्देशांक",
+        "crops": "फसलें",
+        "landSize": "भूमि का आकार",
+        "acres": "एकड़",
+        "preferredLanguage": "पसंदीदा भाषा",
+        "fullNameRequired": "पूरा नाम",
+        "enterFullName": "अपना पूरा नाम दर्ज करें",
+        "nameRequired": "नाम आवश्यक है",
+        "nameMinLength": "नाम कम से कम 2 अक्षर का होना चाहिए",
+        "nameMaxLength": "नाम 100 अक्षरों से अधिक नहीं होना चाहिए",
+        "locationRequired": "स्थान आवश्यक है",
+        "locationMinLength": "स्थान कम से कम 2 अक्षर का होना चाहिए",
+        "searchLocation": "अपना स्थान खोजें...",
+        "state": "राज्य",
+        "selectState": "राज्य चुनें",
+        "autoFilled": "स्थान से स्वतः भरा या मैन्युअल रूप से चुनें",
+        "district": "जिला",
+        "selectDistrict": "जिला चुनें",
+        "selectStateFirst": "पहले राज्य चुनें",
+        "cropsLabel": "फसलें",
+        "typeCropName": "फसल का नाम टाइप करें और Enter दबाएं",
+        "atLeastOneCrop": "कम से कम एक फसल आवश्यक है",
+        "landSizeAcres": "भूमि का आकार (एकड़)",
+        "enterLandSize": "एकड़ में भूमि का आकार दर्ज करें",
+        "landSizeRequired": "भूमि का आकार आवश्यक है",
+        "landSizeMin": "भूमि का आकार 0 से अधिक होना चाहिए",
+        "landSizeMax": "भूमि का आकार बहुत बड़ा लगता है",
+        "preferredLang": "पसंदीदा भाषा",
+        "langRequired": "भाषा प्राथमिकता आवश्यक है",
+        "saveChanges": "बदलाव सहेजें",
+        "cancel": "रद्द करें",
+        "noProfileData": "कोई प्रोफ़ाइल डेटा उपलब्ध नहीं। कृपया फिर से लॉगिन करें।",
+        "failedUpdateProfile": "प्रोफ़ाइल अपडेट करने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "loginPage": {
+        "welcomeBack": "वापसी पर स्वागत",
+        "signInDesc": "अपने कृषि बुद्धिमत्ता मंच तक पहुंचने के लिए साइन इन करें",
+        "phoneNumber": "फ़ोन नंबर",
+        "phoneRequired": "फ़ोन नंबर आवश्यक है",
+        "phoneFormat": "कृपया E.164 प्रारूप में एक वैध फ़ोन नंबर दर्ज करें (उदा., +1234567890)",
+        "phoneFormatHint": "प्रारूप: +[देश कोड][नंबर] (उदा., +1234567890)",
+        "password": "पासवर्ड",
+        "passwordRequired": "पासवर्ड आवश्यक है",
+        "passwordMinLength": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए",
+        "enterPassword": "अपना पासवर्ड दर्ज करें",
+        "passwordStrength": "पासवर्ड की मजबूती:",
+        "signIn": "साइन इन",
+        "dontHaveAccount": "खाता नहीं है?",
+        "signUpHere": "यहां साइन अप करें"
+    },
+    "registerPage": {
+        "createAccount": "खाता बनाएं",
+        "signUpDesc": "कृषि बुद्धिमत्ता मंच से जुड़ें",
+        "fullName": "पूरा नाम",
+        "nameRequired": "नाम आवश्यक है",
+        "nameMinLength": "नाम कम से कम 2 अक्षर का होना चाहिए",
+        "enterFullName": "अपना पूरा नाम दर्ज करें",
+        "phoneNumber": "फ़ोन नंबर",
+        "phoneRequired": "फ़ोन नंबर आवश्यक है",
+        "phoneFormat": "कृपया E.164 प्रारूप में एक वैध फ़ोन नंबर दर्ज करें (उदा., +1234567890)",
+        "password": "पासवर्ड",
+        "passwordRequired": "पासवर्ड आवश्यक है",
+        "passwordMinLength": "पासवर्ड कम से कम 8 अक्षर का होना चाहिए",
+        "enterPassword": "पासवर्ड बनाएं",
+        "confirmPassword": "पासवर्ड की पुष्टि करें",
+        "confirmPasswordRequired": "कृपया अपने पासवर्ड की पुष्टि करें",
+        "passwordsMustMatch": "पासवर्ड मेल नहीं खाते",
+        "signUp": "साइन अप",
+        "alreadyHaveAccount": "पहले से खाता है?",
+        "signInHere": "यहां साइन इन करें",
+        "passwordStrength": "पासवर्ड की मजबूती:"
+    },
+    "profileCompletionPage": {
+        "completeProfile": "अपनी प्रोफ़ाइल पूरी करें",
+        "completeProfileDesc": "व्यक्तिगत सिफारिशें प्राप्त करने के लिए कृपया निम्नलिखित विवरण भरें",
+        "failedSaveProfile": "प्रोफ़ाइल सहेजने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "chatErrors": {
+        "userDataNotAvailable": "उपयोगकर्ता डेटा उपलब्ध नहीं। कृपया पृष्ठ रीफ्रेश करें।",
+        "noActiveSession": "कोई सक्रिय सत्र नहीं। कृपया पृष्ठ रीफ्रेश करें।",
+        "failedInitSession": "चैट सत्र प्रारंभ करने में विफल",
+        "failedSendMessage": "संदेश भेजने में विफल",
+        "failedExportHistory": "चैट इतिहास निर्यात करने में विफल",
+        "failedEndSession": "सत्र समाप्त करने में विफल",
+        "unableLoadUserData": "उपयोगकर्ता डेटा लोड करने में असमर्थ। कृपया पृष्ठ रीफ्रेश करें।"
+    },
+    "dashboardErrors": {
+        "failedLoadWeather": "मौसम डेटा लोड करने में विफल",
+        "failedLoadMarket": "बाजार डेटा लोड करने में विफल",
+        "failedLoadSchemes": "योजनाएं लोड करने में विफल",
+        "failedLoadNotifications": "सूचनाएं लोड करने में विफल",
+        "locationRequired": "बाजार डेटा के लिए स्थान निर्देशांक आवश्यक हैं"
+    },
+    "weatherErrors": {
+        "failedLoadCurrent": "वर्तमान मौसम डेटा लोड करने में विफल",
+        "failedLoadForecast": "पूर्वानुमान डेटा लोड करने में विफल",
+        "maxTemp": "अधिकतम तापमान (°C)",
+        "minTemp": "न्यूनतम तापमान (°C)",
+        "chartTitle": "7-दिन का तापमान पूर्वानुमान"
+    },
+    "marketErrors": {
+        "failedLoadMarket": "बाजार डेटा लोड करने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "schemeErrors": {
+        "enterSearchTerm": "कृपया खोज शब्द दर्ज करें या फ़िल्टर चुनें",
+        "failedSearch": "योजनाएं खोजने में विफल। कृपया पुनः प्रयास करें।",
+        "failedLoadDetails": "योजना विवरण लोड करने में विफल। कृपया पुनः प्रयास करें।",
+        "failedCheckEligibility": "पात्रता जांचने में विफल। कृपया पुनः प्रयास करें।"
+    },
+    "notificationErrors": {
+        "unableIdentifyUser": "उपयोगकर्ता को पहचानने में असमर्थ। कृपया फिर से लॉगिन करें।",
+        "noUserIdPreferences": "प्राथमिकताएं लाने के लिए कोई उपयोगकर्ता ID उपलब्ध नहीं। कृपया सुनिश्चित करें कि आप लॉगिन हैं।",
+        "userNotAuthenticated": "उपयोगकर्ता प्रमाणित नहीं है। कृपया लॉगिन करें।",
+        "failedLoadNotifications": "सूचनाएं लोड करने में विफल",
+        "failedLoadPreferences": "प्राथमिकताएं लोड करने में विफल",
+        "failedUpdatePreferences": "प्राथमिकताएं अपडेट करने में विफल"
+    },
+    "diseaseErrors": {
+        "failedAnalyze": "छवि विश्लेषण करने में विफल",
+        "failedDetailedTreatment": "विस्तृत उपचार प्राप्त करने में विफल"
+    },
+    "speechErrors": {
+        "selectOrRecordAudio": "कृपया एक ऑडियो फ़ाइल चुनें या रिकॉर्ड करें",
+        "failedTranscribe": "ऑडियो ट्रांसक्राइब करने में विफल",
+        "enterTextToConvert": "कृपया वाक् में बदलने के लिए टेक्स्ट दर्ज करें"
+    },
+    "componentErrors": {
+        "invalidImageFormat": "अमान्य छवि प्रारूप। कृपया JPEG, PNG, या WebP चुनें।",
+        "locationNotConfigured": "स्थान सेवा ठीक से कॉन्फ़िगर नहीं है। कृपया सहायता से संपर्क करें।",
+        "locationApiInvalid": "स्थान सेवा API कुंजी अमान्य है। कृपया व्यवस्थापक से संपर्क करें।",
+        "unableFetchLocation": "स्थान सुझाव प्राप्त करने में असमर्थ। कृपया पुनः प्रयास करें।",
+        "lowConfidenceWarning": "कम विश्वास स्कोर। कृपया सटीकता के लिए ट्रांसक्रिप्शन की समीक्षा करें और संपादित करें।"
     }
 }

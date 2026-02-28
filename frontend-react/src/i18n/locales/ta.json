@@ -543,6 +543,154 @@
         "bicycling": "மிதிவண்டி ஓட்டுதல்",
         "bicyclingDesc": "மிதிவண்டி பாதைகள் மற்றும் வழிகள் உட்பட மிதிவண்டிகளுக்கு ஏற்ற வழிகளைக் கணக்கிடுகிறது.",
         "transit": "போக்குவரத்து",
-        "transitDesc": "பேருந்துகள், ரயில்கள் மற்றும் மெட்ரோ போன்ற பொது போக்குவரத்தைப் பயன்படுத்தி வழிகளைக் கணக்கிடுகிறது."
+        "transitDesc": "பேருந்துகள், ரயில்கள் மற்றும் மெட்ரோ போன்ற பொது போக்குவரத்தைப் பயன்படுத்தி வழிகளைக் கணக்கிடுகிறது.",
+        "enterLocation": "অনুগ্রহ করে একটি অবস্থান লিখুন",
+        "selectBothPoints": "অনুগ্রহ করে উৎপত্তিস্থল এবং গন্তব্য উভয়ই নির্বাচন করুন"
+    },
+    "profilePage": {
+        "myProfile": "আমার প্রোফাইল",
+        "manageInfo": "আপনার ব্যক্তিগত তথ্য এবং পছন্দ পরিচালনা করুন",
+        "profileUpdatedSuccess": "প্রোফাইল সফলভাবে আপডেট হয়েছে!",
+        "profileCompletion": "প্রোফাইল সম্পূর্ণতা",
+        "missingInfo": "অনুপস্থিত তথ্য:",
+        "profileComplete": "আপনার প্রোফাইল সম্পূর্ণ!",
+        "profileInfo": "প্রোফাইল তথ্য",
+        "editProfile": "প্রোফাইল সম্পাদনা",
+        "fullName": "পুরো নাম",
+        "notProvided": "প্রদান করা হয়নি",
+        "phoneNumber": "ফোন নম্বর",
+        "location": "অবস্থান",
+        "coordinates": "স্থানাঙ্ক",
+        "crops": "ফসল",
+        "landSize": "জমির আকার",
+        "acres": "একর",
+        "preferredLanguage": "পছন্দের ভাষা",
+        "fullNameRequired": "পুরো নাম",
+        "enterFullName": "আপনার পুরো নাম লিখুন",
+        "nameRequired": "নাম প্রয়োজন",
+        "nameMinLength": "নাম কমপক্ষে ২ অক্ষরের হতে হবে",
+        "nameMaxLength": "নাম ১০০ অক্ষরের বেশি হওয়া উচিত নয়",
+        "locationRequired": "অবস্থান প্রয়োজন",
+        "locationMinLength": "অবস্থান কমপক্ষে ২ অক্ষরের হতে হবে",
+        "searchLocation": "আপনার অবস্থান অনুসন্ধান করুন...",
+        "state": "রাজ্য",
+        "selectState": "রাজ্য নির্বাচন করুন",
+        "autoFilled": "অবস্থান থেকে স্বয়ংক্রিয়ভাবে পূরণ বা ম্যানুয়ালি নির্বাচন করুন",
+        "district": "জেলা",
+        "selectDistrict": "জেলা নির্বাচন করুন",
+        "selectStateFirst": "প্রথমে রাজ্য নির্বাচন করুন",
+        "cropsLabel": "ফসল",
+        "typeCropName": "ফসলের নাম টাইপ করুন এবং Enter চাপুন",
+        "atLeastOneCrop": "কমপক্ষে একটি ফসল প্রয়োজন",
+        "landSizeAcres": "জমির আকার (একর)",
+        "enterLandSize": "একরে জমির আকার লিখুন",
+        "landSizeRequired": "জমির আকার প্রয়োজন",
+        "landSizeMin": "জমির আকার ০ এর বেশি হতে হবে",
+        "landSizeMax": "জমির আকার অত্যন্ত বড় মনে হচ্ছে",
+        "preferredLang": "পছন্দের ভাষা",
+        "langRequired": "ভাষা পছন্দ প্রয়োজন",
+        "saveChanges": "পরিবর্তন সংরক্ষণ করুন",
+        "cancel": "বাতিল",
+        "noProfileData": "কোনো প্রোফাইল ডেটা উপলব্ধ নেই। অনুগ্রহ করে আবার লগইন করুন।",
+        "failedUpdateProfile": "প্রোফাইল আপডেট করতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    },
+    "loginPage": {
+        "welcomeBack": "স্বাগতম",
+        "signInDesc": "আপনার কৃষি বুদ্ধিমত্তা প্ল্যাটফর্মে অ্যাক্সেস করতে সাইন ইন করুন",
+        "phoneNumber": "ফোন নম্বর",
+        "phoneRequired": "ফোন নম্বর প্রয়োজন",
+        "phoneFormat": "অনুগ্রহ করে E.164 ফর্ম্যাটে একটি বৈধ ফোন নম্বর লিখুন (যেমন, +1234567890)",
+        "phoneFormatHint": "ফর্ম্যাট: +[দেশের কোড][নম্বর] (যেমন, +1234567890)",
+        "password": "পাসওয়ার্ড",
+        "passwordRequired": "পাসওয়ার্ড প্রয়োজন",
+        "passwordMinLength": "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+        "enterPassword": "আপনার পাসওয়ার্ড লিখুন",
+        "passwordStrength": "পাসওয়ার্ডের শক্তি:",
+        "signIn": "সাইন ইন",
+        "dontHaveAccount": "অ্যাকাউন্ট নেই?",
+        "signUpHere": "এখানে সাইন আপ করুন"
+    },
+    "registerPage": {
+        "createAccount": "অ্যাকাউন্ট তৈরি করুন",
+        "signUpDesc": "কৃষি বুদ্ধিমত্তা প্ল্যাটফর্মে যোগ দিন",
+        "fullName": "পুরো নাম",
+        "nameRequired": "নাম প্রয়োজন",
+        "nameMinLength": "নাম কমপক্ষে ২ অক্ষরের হতে হবে",
+        "enterFullName": "আপনার পুরো নাম লিখুন",
+        "phoneNumber": "ফোন নম্বর",
+        "phoneRequired": "ফোন নম্বর প্রয়োজন",
+        "phoneFormat": "অনুগ্রহ করে E.164 ফর্ম্যাটে একটি বৈধ ফোন নম্বর লিখুন",
+        "password": "পাসওয়ার্ড",
+        "passwordRequired": "পাসওয়ার্ড প্রয়োজন",
+        "passwordMinLength": "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে",
+        "enterPassword": "পাসওয়ার্ড তৈরি করুন",
+        "confirmPassword": "পাসওয়ার্ড নিশ্চিত করুন",
+        "confirmPasswordRequired": "অনুগ্রহ করে আপনার পাসওয়ার্ড নিশ্চিত করুন",
+        "passwordsMustMatch": "পাসওয়ার্ড মিলছে না",
+        "signUp": "সাইন আপ",
+        "alreadyHaveAccount": "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+        "signInHere": "এখানে সাইন ইন করুন",
+        "passwordStrength": "পাসওয়ার্ডের শক্তি:"
+    },
+    "profileCompletionPage": {
+        "completeProfile": "আপনার প্রোফাইল সম্পূর্ণ করুন",
+        "completeProfileDesc": "ব্যক্তিগত সুপারিশ পেতে অনুগ্রহ করে নিম্নলিখিত বিবরণ পূরণ করুন",
+        "failedSaveProfile": "প্রোফাইল সংরক্ষণ করতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    },
+    "chatErrors": {
+        "userDataNotAvailable": "ব্যবহারকারীর ডেটা উপলব্ধ নেই। অনুগ্রহ করে পৃষ্ঠা রিফ্রেশ করুন।",
+        "noActiveSession": "কোনো সক্রিয় সেশন নেই। অনুগ্রহ করে পৃষ্ঠা রিফ্রেশ করুন।",
+        "failedInitSession": "চ্যাট সেশন শুরু করতে ব্যর্থ",
+        "failedSendMessage": "বার্তা পাঠাতে ব্যর্থ",
+        "failedExportHistory": "চ্যাট ইতিহাস রপ্তানি করতে ব্যর্থ",
+        "failedEndSession": "সেশন শেষ করতে ব্যর্থ",
+        "unableLoadUserData": "ব্যবহারকারীর ডেটা লোড করতে অক্ষম। অনুগ্রহ করে পৃষ্ঠা রিফ্রেশ করুন।"
+    },
+    "dashboardErrors": {
+        "failedLoadWeather": "আবহাওয়ার ডেটা লোড করতে ব্যর্থ",
+        "failedLoadMarket": "বাজারের ডেটা লোড করতে ব্যর্থ",
+        "failedLoadSchemes": "প্রকল্প লোড করতে ব্যর্থ",
+        "failedLoadNotifications": "বিজ্ঞপ্তি লোড করতে ব্যর্থ",
+        "locationRequired": "বাজারের ডেটার জন্য অবস্থানের স্থানাঙ্ক প্রয়োজন"
+    },
+    "weatherErrors": {
+        "failedLoadCurrent": "বর্তমান আবহাওয়ার ডেটা লোড করতে ব্যর্থ",
+        "failedLoadForecast": "পূর্বাভাস ডেটা লোড করতে ব্যর্থ",
+        "maxTemp": "সর্বোচ্চ তাপমাত্রা (°C)",
+        "minTemp": "সর্বনিম্ন তাপমাত্রা (°C)",
+        "chartTitle": "৭-দিনের তাপমাত্রা পূর্বাভাস"
+    },
+    "marketErrors": {
+        "failedLoadMarket": "বাজারের ডেটা লোড করতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    },
+    "schemeErrors": {
+        "enterSearchTerm": "অনুগ্রহ করে একটি অনুসন্ধান শব্দ লিখুন বা ফিল্টার নির্বাচন করুন",
+        "failedSearch": "প্রকল্প খুঁজতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।",
+        "failedLoadDetails": "প্রকল্পের বিবরণ লোড করতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।",
+        "failedCheckEligibility": "যোগ্যতা পরীক্ষা করতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।"
+    },
+    "notificationErrors": {
+        "unableIdentifyUser": "ব্যবহারকারী শনাক্ত করতে অক্ষম। অনুগ্রহ করে আবার লগইন করুন।",
+        "noUserIdPreferences": "পছন্দ আনার জন্য কোনো ব্যবহারকারী ID উপলব্ধ নেই। আপনি লগইন আছেন কিনা নিশ্চিত করুন।",
+        "userNotAuthenticated": "ব্যবহারকারী প্রমাণীকৃত নয়। অনুগ্রহ করে লগইন করুন।",
+        "failedLoadNotifications": "বিজ্ঞপ্তি লোড করতে ব্যর্থ",
+        "failedLoadPreferences": "পছন্দ লোড করতে ব্যর্থ",
+        "failedUpdatePreferences": "পছন্দ আপডেট করতে ব্যর্থ"
+    },
+    "diseaseErrors": {
+        "failedAnalyze": "ছবি বিশ্লেষণ করতে ব্যর্থ",
+        "failedDetailedTreatment": "বিস্তারিত চিকিৎসা আনতে ব্যর্থ"
+    },
+    "speechErrors": {
+        "selectOrRecordAudio": "অনুগ্রহ করে একটি অডিও ফাইল নির্বাচন বা রেকর্ড করুন",
+        "failedTranscribe": "অডিও ট্রান্সক্রাইব করতে ব্যর্থ",
+        "enterTextToConvert": "অনুগ্রহ করে বাক্যে রূপান্তর করতে পাঠ্য লিখুন"
+    },
+    "componentErrors": {
+        "invalidImageFormat": "অবৈধ ছবির ফর্ম্যাট। অনুগ্রহ করে JPEG, PNG, বা WebP নির্বাচন করুন।",
+        "locationNotConfigured": "অবস্থান পরিষেবা সঠিকভাবে কনফিগার করা হয়নি। অনুগ্রহ করে সহায়তায় যোগাযোগ করুন।",
+        "locationApiInvalid": "অবস্থান পরিষেবা API কী অবৈধ। অনুগ্রহ করে প্রশাসকের সাথে যোগাযোগ করুন।",
+        "unableFetchLocation": "অবস্থানের পরামর্শ আনতে অক্ষম। অনুগ্রহ করে আবার চেষ্টা করুন।",
+        "lowConfidenceWarning": "কম আত্মবিশ্বাসের স্কোর। সঠিকতার জন্য ট্রান্সক্রিপশন পর্যালোচনা ও সম্পাদনা করুন।"
     }
 }

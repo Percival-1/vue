@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { FaPlay, FaPause, FaStop, FaDownload, FaVolumeUp } from 'react-icons/fa'
 import { ClipLoader } from 'react-spinners'
+import { useTranslation } from 'react-i18next'
 import { speechService } from '../../api/services'
 
 /**
@@ -11,6 +12,7 @@ import { speechService } from '../../api/services'
  * @param {Function} onSynthesisComplete - Callback when synthesis is complete
  */
 const TextToSpeech = ({ initialText = '', onSynthesisComplete }) => {
+    const { t } = useTranslation()
     const [text, setText] = useState(initialText)
     const [selectedVoice, setSelectedVoice] = useState('default')
     const [selectedLanguage, setSelectedLanguage] = useState('en')
@@ -111,7 +113,7 @@ const TextToSpeech = ({ initialText = '', onSynthesisComplete }) => {
      */
     const handleSynthesize = async () => {
         if (!text.trim()) {
-            setError('Please enter text to convert to speech')
+            setError(t('speechErrors.enterTextToConvert'))
             return
         }
 

@@ -82,7 +82,7 @@ export default function Dashboard() {
                 setWeatherData(data);
             } catch (error) {
                 console.error('Error fetching weather:', error);
-                setWeatherError('Failed to load weather data');
+                setWeatherError(t('dashboardErrors.failedLoadWeather'));
             } finally {
                 setLoadingWeather(false);
             }
@@ -103,7 +103,7 @@ export default function Dashboard() {
 
             // Check if user has location coordinates
             if (!profile?.location_lat || !profile?.location_lng) {
-                setMarketError('Location coordinates required for market data');
+                setMarketError(t('dashboardErrors.locationRequired'));
                 setLoadingMarket(false);
                 return;
             }
@@ -121,7 +121,7 @@ export default function Dashboard() {
                 setMarketData(data);
             } catch (error) {
                 console.error('Error fetching market data:', error);
-                setMarketError('Failed to load market data');
+                setMarketError(t('dashboardErrors.failedLoadMarket'));
             } finally {
                 setLoadingMarket(false);
             }
@@ -151,7 +151,7 @@ export default function Dashboard() {
                 setStats(prev => ({ ...prev, activeSchemes: schemesArray.length }));
             } catch (error) {
                 console.error('Error fetching schemes:', error);
-                setSchemesError('Failed to load schemes');
+                setSchemesError(t('dashboardErrors.failedLoadSchemes'));
                 setSchemes([]); // Set to empty array on error
             } finally {
                 setLoadingSchemes(false);
@@ -194,7 +194,7 @@ export default function Dashboard() {
                 }));
             } catch (error) {
                 console.error('Error fetching notifications:', error);
-                setNotificationsError('Failed to load notifications');
+                setNotificationsError(t('dashboardErrors.failedLoadNotifications'));
                 setNotifications([]); // Set to empty array on error
             } finally {
                 setLoadingNotifications(false);

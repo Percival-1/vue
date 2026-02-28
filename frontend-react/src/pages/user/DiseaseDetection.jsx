@@ -141,7 +141,7 @@ export default function DiseaseDetection() {
                 setError(response.error || 'Analysis failed');
             }
         } catch (err) {
-            setError(err.message || 'Failed to analyze image');
+            setError(err.message || t('diseaseErrors.failedAnalyze'));
         } finally {
             setIsUploading(false);
             setUploadProgress(0);
@@ -164,10 +164,10 @@ export default function DiseaseDetection() {
             if (response.success && response.treatment_info) {
                 setDetailedTreatment(response.treatment_info);
             } else {
-                setError('Failed to fetch detailed treatment');
+                setError(t('diseaseErrors.failedDetailedTreatment'));
             }
         } catch (err) {
-            setError(err.message || 'Failed to fetch detailed treatment');
+            setError(err.message || t('diseaseErrors.failedDetailedTreatment'));
         } finally {
             setIsLoadingTreatment(false);
         }

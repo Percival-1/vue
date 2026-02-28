@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FaPhone, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import Loader from '../../components/common/Loader';
@@ -18,6 +19,7 @@ import Loader from '../../components/common/Loader';
  * Requirements: 1.1, 1.5, 1.6
  */
 export default function Login() {
+    const { t } = useTranslation();
     const location = useLocation();
     const { login, loading, error, clearError, checkPasswordStrength } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
@@ -104,10 +106,10 @@ export default function Login() {
                 {/* Header */}
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Welcome Back
+                        {t('loginPage.welcomeBack')}
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Sign in to access your agricultural intelligence platform
+                        {t('loginPage.signInDesc')}
                     </p>
                 </div>
 
@@ -124,7 +126,7 @@ export default function Login() {
                         {/* Phone Number Field */}
                         <div>
                             <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700 mb-1">
-                                Phone Number
+                                {t('loginPage.phoneNumber')}
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -137,10 +139,10 @@ export default function Login() {
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.phone_number ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('phone_number', {
-                                        required: 'Phone number is required',
+                                        required: t('loginPage.phoneRequired'),
                                         pattern: {
                                             value: /^\+[1-9]\d{1,14}$/,
-                                            message: 'Please enter a valid phone number in E.164 format (e.g., +1234567890)'
+                                            message: t('loginPage.phoneFormat')
                                         }
                                     })}
                                 />
@@ -149,14 +151,14 @@ export default function Login() {
                                 <p className="mt-1 text-sm text-red-600">{errors.phone_number.message}</p>
                             )}
                             <p className="mt-1 text-xs text-gray-500">
-                                Format: +[country code][number] (e.g., +1234567890)
+                                {t('loginPage.phoneFormatHint')}
                             </p>
                         </div>
 
                         {/* Password Field */}
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                Password
+                                {t('loginPage.password')}
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -165,14 +167,14 @@ export default function Login() {
                                 <input
                                     id="password"
                                     type={showPassword ? 'text' : 'password'}
-                                    placeholder="Enter your password"
+                                    placeholder={t('loginPage.enterPassword')}
                                     className={`appearance-none block w-full pl-10 pr-10 py-2 border ${errors.password ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('password', {
-                                        required: 'Password is required',
+                                        required: t('loginPage.passwordRequired'),
                                         minLength: {
                                             value: 6,
-                                            message: 'Password must be at least 6 characters'
+                                            message: t('loginPage.passwordMinLength')
                                         }
                                     })}
                                 />
@@ -196,10 +198,10 @@ export default function Login() {
                             {password && passwordStrength && (
                                 <div className="mt-2">
                                     <div className="flex items-center justify-between mb-1">
-                                        <span className="text-xs text-gray-600">Password Strength:</span>
+                                        <span className="text-xs text-gray-600">{t('loginPage.passwordStrength')}</span>
                                         <span className={`text-xs font-medium ${passwordStrength.label === 'Strong' ? 'text-green-600' :
-                                                passwordStrength.label === 'Medium' ? 'text-yellow-600' :
-                                                    'text-red-600'
+                                            passwordStrength.label === 'Medium' ? 'text-yellow-600' :
+                                                'text-red-600'
                                             }`}>
                                             {passwordStrength.label}
                                         </span>
@@ -225,7 +227,7 @@ export default function Login() {
                             {loading || isSubmitting ? (
                                 <Loader size={20} color="#ffffff" />
                             ) : (
-                                'Sign In'
+                                t('loginPage.signIn')
                             )}
                         </button>
                     </div>
@@ -233,12 +235,12 @@ export default function Login() {
                     {/* Register Link */}
                     <div className="text-center">
                         <p className="text-sm text-gray-600">
-                            Don't have an account?{' '}
+                            {t('loginPage.dontHaveAccount')}{' '}
                             <Link
                                 to="/register"
                                 className="font-medium text-blue-600 hover:text-blue-500"
                             >
-                                Sign up here
+                                {t('loginPage.signUpHere')}
                             </Link>
                         </p>
                     </div>

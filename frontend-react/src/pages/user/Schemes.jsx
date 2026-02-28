@@ -96,7 +96,7 @@ export default function Schemes() {
      */
     const handleSearch = async () => {
         if (!searchQuery.trim() && !selectedCategory && !selectedType) {
-            setError('Please enter a search term or select filters');
+            setError(t('schemeErrors.enterSearchTerm'));
             return;
         }
 
@@ -115,7 +115,7 @@ export default function Schemes() {
             setActiveView('search');
         } catch (err) {
             console.error('Error searching schemes:', err);
-            setError('Failed to search schemes. Please try again.');
+            setError(t('schemeErrors.failedSearch'));
         } finally {
             setLoadingSchemes(false);
         }
@@ -172,7 +172,7 @@ export default function Schemes() {
             setActiveView('details');
         } catch (err) {
             console.error('Error fetching scheme details:', err);
-            setError('Failed to load scheme details. Please try again.');
+            setError(t('schemeErrors.failedLoadDetails'));
         } finally {
             setLoadingSchemes(false);
         }
@@ -211,7 +211,7 @@ export default function Schemes() {
             setEligibilityResult(data);
         } catch (err) {
             console.error('Error checking eligibility:', err);
-            setError('Failed to check eligibility. Please try again.');
+            setError(t('schemeErrors.failedCheckEligibility'));
         } finally {
             setLoadingEligibility(false);
         }

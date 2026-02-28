@@ -152,7 +152,7 @@ export default function SpeechServices() {
         const audioFile = transcriptionMode === 'upload' ? selectedAudioFile : recordedAudio
 
         if (!audioFile) {
-            setTranscriptionError('Please select or record an audio file')
+            setTranscriptionError(t('speechErrors.selectOrRecordAudio'))
             return
         }
 
@@ -178,7 +178,7 @@ export default function SpeechServices() {
             saveToLibrary(audioFile, result.text)
         } catch (err) {
             console.error('Transcription error:', err)
-            setTranscriptionError(err.message || 'Failed to transcribe audio')
+            setTranscriptionError(err.message || t('speechErrors.failedTranscribe'))
         } finally {
             setIsTranscribing(false)
         }

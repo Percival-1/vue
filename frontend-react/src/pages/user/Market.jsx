@@ -212,7 +212,7 @@ export default function Market() {
         } catch (err) {
             console.error('Error fetching market data:', err);
             // Show more detailed error message
-            const errorMessage = err.message || err.detail || 'Failed to load market data. Please try again.';
+            const errorMessage = err.message || err.detail || t('marketErrors.failedLoadMarket');
             setError(errorMessage);
         } finally {
             setLoadingPrices(false);

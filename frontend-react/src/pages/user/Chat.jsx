@@ -37,7 +37,7 @@ export default function Chat() {
     const initializeNewSession = async () => {
         if (!user || !user.id) {
             console.error('User data missing:', { user, hasId: !!user?.id });
-            setError('User data not available. Please refresh the page.');
+            setError(t('chatErrors.userDataNotAvailable'));
             return;
         }
 
@@ -62,7 +62,7 @@ export default function Chat() {
         } catch (err) {
             console.error('=== SESSION INITIALIZATION FAILED ===');
             console.error('Error:', err);
-            setError(err.message || 'Failed to initialize chat session');
+            setError(err.message || t('chatErrors.failedInitSession'));
         } finally {
             setLoading(false);
         }
@@ -119,7 +119,7 @@ export default function Chat() {
      */
     const handleSendMessage = async ({ message, image }) => {
         if (!sessionId) {
-            setError('No active session. Please refresh the page.');
+            setError(t('chatErrors.noActiveSession'));
             return;
         }
 
@@ -171,7 +171,7 @@ export default function Chat() {
         } catch (err) {
             console.error('=== SEND MESSAGE FAILED ===');
             console.error('Error:', err);
-            setError(err.message || 'Failed to send message');
+            setError(err.message || t('chatErrors.failedSendMessage'));
         } finally {
             setIsSending(false);
         }
@@ -188,7 +188,7 @@ export default function Chat() {
             const blob = await chatService.exportHistory(sessionId);
             chatService.downloadHistory(blob, `chat-${sessionId}-${Date.now()}.json`);
         } catch (err) {
-            setError(err.message || 'Failed to export chat history');
+            setError(err.message || t('chatErrors.failedExportHistory'));
         }
     };
 
@@ -215,7 +215,7 @@ export default function Chat() {
             setMessages([]);
             setError(null);
         } catch (err) {
-            setError(err.message || 'Failed to end session');
+            setError(err.message || t('chatErrors.failedEndSession'));
         }
     };
 
@@ -244,7 +244,7 @@ export default function Chat() {
     if (!user) {
         return (
             <div className="flex items-center justify-center h-full">
-                <ErrorAlert message="Unable to load user data. Please refresh the page." />
+                <ErrorAlert message={t('chatErrors.unableLoadUserData')} />
             </div>
         );
     }

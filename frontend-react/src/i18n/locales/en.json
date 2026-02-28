@@ -543,6 +543,154 @@
         "bicycling": "Bicycling",
         "bicyclingDesc": "Calculates routes suitable for bicycles, including bike lanes and paths.",
         "transit": "Transit",
-        "transitDesc": "Calculates routes using public transportation like buses, trains, and metro."
+        "transitDesc": "Calculates routes using public transportation like buses, trains, and metro.",
+        "enterLocation": "Please enter a location",
+        "selectBothPoints": "Please select both origin and destination"
+    },
+    "profilePage": {
+        "myProfile": "My Profile",
+        "manageInfo": "Manage your personal information and preferences",
+        "profileUpdatedSuccess": "Profile updated successfully!",
+        "profileCompletion": "Profile Completion",
+        "missingInfo": "Missing information:",
+        "profileComplete": "Your profile is complete!",
+        "profileInfo": "Profile Information",
+        "editProfile": "Edit Profile",
+        "fullName": "Full Name",
+        "notProvided": "Not provided",
+        "phoneNumber": "Phone Number",
+        "location": "Location",
+        "coordinates": "Coordinates",
+        "crops": "Crops",
+        "landSize": "Land Size",
+        "acres": "acres",
+        "preferredLanguage": "Preferred Language",
+        "fullNameRequired": "Full Name",
+        "enterFullName": "Enter your full name",
+        "nameRequired": "Name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "nameMaxLength": "Name must not exceed 100 characters",
+        "locationRequired": "Location is required",
+        "locationMinLength": "Location must be at least 2 characters",
+        "searchLocation": "Search for your location...",
+        "state": "State",
+        "selectState": "Select State",
+        "autoFilled": "Auto-filled from location or select manually",
+        "district": "District",
+        "selectDistrict": "Select District",
+        "selectStateFirst": "Select State First",
+        "cropsLabel": "Crops",
+        "typeCropName": "Type crop name and press Enter",
+        "atLeastOneCrop": "At least one crop is required",
+        "landSizeAcres": "Land Size (acres)",
+        "enterLandSize": "Enter land size in acres",
+        "landSizeRequired": "Land size is required",
+        "landSizeMin": "Land size must be greater than 0",
+        "landSizeMax": "Land size seems too large",
+        "preferredLang": "Preferred Language",
+        "langRequired": "Language preference is required",
+        "saveChanges": "Save Changes",
+        "cancel": "Cancel",
+        "noProfileData": "No profile data available. Please log in again.",
+        "failedUpdateProfile": "Failed to update profile. Please try again."
+    },
+    "loginPage": {
+        "welcomeBack": "Welcome Back",
+        "signInDesc": "Sign in to access your agricultural intelligence platform",
+        "phoneNumber": "Phone Number",
+        "phoneRequired": "Phone number is required",
+        "phoneFormat": "Please enter a valid phone number in E.164 format (e.g., +1234567890)",
+        "phoneFormatHint": "Format: +[country code][number] (e.g., +1234567890)",
+        "password": "Password",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 6 characters",
+        "enterPassword": "Enter your password",
+        "passwordStrength": "Password Strength:",
+        "signIn": "Sign In",
+        "dontHaveAccount": "Don't have an account?",
+        "signUpHere": "Sign up here"
+    },
+    "registerPage": {
+        "createAccount": "Create Account",
+        "signUpDesc": "Join the agricultural intelligence platform",
+        "fullName": "Full Name",
+        "nameRequired": "Name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "enterFullName": "Enter your full name",
+        "phoneNumber": "Phone Number",
+        "phoneRequired": "Phone number is required",
+        "phoneFormat": "Please enter a valid phone number in E.164 format (e.g., +1234567890)",
+        "password": "Password",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 8 characters",
+        "enterPassword": "Create a password",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordRequired": "Please confirm your password",
+        "passwordsMustMatch": "Passwords do not match",
+        "signUp": "Sign Up",
+        "alreadyHaveAccount": "Already have an account?",
+        "signInHere": "Sign in here",
+        "passwordStrength": "Password Strength:"
+    },
+    "profileCompletionPage": {
+        "completeProfile": "Complete Your Profile",
+        "completeProfileDesc": "Please fill in the following details to get personalized recommendations",
+        "failedSaveProfile": "Failed to save profile. Please try again."
+    },
+    "chatErrors": {
+        "userDataNotAvailable": "User data not available. Please refresh the page.",
+        "noActiveSession": "No active session. Please refresh the page.",
+        "failedInitSession": "Failed to initialize chat session",
+        "failedSendMessage": "Failed to send message",
+        "failedExportHistory": "Failed to export chat history",
+        "failedEndSession": "Failed to end session",
+        "unableLoadUserData": "Unable to load user data. Please refresh the page."
+    },
+    "dashboardErrors": {
+        "failedLoadWeather": "Failed to load weather data",
+        "failedLoadMarket": "Failed to load market data",
+        "failedLoadSchemes": "Failed to load schemes",
+        "failedLoadNotifications": "Failed to load notifications",
+        "locationRequired": "Location coordinates required for market data"
+    },
+    "weatherErrors": {
+        "failedLoadCurrent": "Failed to load current weather data",
+        "failedLoadForecast": "Failed to load forecast data",
+        "maxTemp": "Max Temperature (°C)",
+        "minTemp": "Min Temperature (°C)",
+        "chartTitle": "7-Day Temperature Forecast"
+    },
+    "marketErrors": {
+        "failedLoadMarket": "Failed to load market data. Please try again."
+    },
+    "schemeErrors": {
+        "enterSearchTerm": "Please enter a search term or select filters",
+        "failedSearch": "Failed to search schemes. Please try again.",
+        "failedLoadDetails": "Failed to load scheme details. Please try again.",
+        "failedCheckEligibility": "Failed to check eligibility. Please try again."
+    },
+    "notificationErrors": {
+        "unableIdentifyUser": "Unable to identify user. Please log in again.",
+        "noUserIdPreferences": "No user ID available for fetching preferences. Please ensure you are logged in.",
+        "userNotAuthenticated": "User not authenticated. Please log in.",
+        "failedLoadNotifications": "Failed to load notifications",
+        "failedLoadPreferences": "Failed to load preferences",
+        "failedUpdatePreferences": "Failed to update preferences"
+    },
+    "diseaseErrors": {
+        "failedAnalyze": "Failed to analyze image",
+        "failedDetailedTreatment": "Failed to fetch detailed treatment"
+    },
+    "speechErrors": {
+        "selectOrRecordAudio": "Please select or record an audio file",
+        "failedTranscribe": "Failed to transcribe audio",
+        "enterTextToConvert": "Please enter text to convert to speech"
+    },
+    "componentErrors": {
+        "invalidImageFormat": "Invalid image format. Please select JPEG, PNG, or WebP.",
+        "locationNotConfigured": "Location service is not configured properly. Please contact support.",
+        "locationApiInvalid": "Location service API key is invalid. Please contact administrator.",
+        "unableFetchLocation": "Unable to fetch location suggestions. Please try again.",
+        "lowConfidenceWarning": "Low confidence score. Please review and edit the transcription for accuracy."
     }
 }
