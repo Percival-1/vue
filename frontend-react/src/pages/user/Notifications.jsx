@@ -137,7 +137,7 @@ export default function Notifications() {
             console.log('Auth user:', currentUser);
             console.log('Profile:', profile);
             dispatch(setLoading(false));
-            dispatch(setError(t('notificationErrors.unableIdentifyUser')));
+            dispatch(setError('Unable to identify user. Please log in again.'));
             return;
         }
 
@@ -153,7 +153,7 @@ export default function Notifications() {
             dispatch(setLoading(false));
         } catch (err) {
             console.error('Error fetching notifications:', err);
-            dispatch(setError(err.message || t('notificationErrors.failedLoadNotifications')));
+            dispatch(setError(err.message || 'Failed to load notifications'));
             dispatch(setLoading(false));
         }
     };
@@ -165,7 +165,7 @@ export default function Notifications() {
         const userId = getUserId();
 
         if (!userId) {
-            const errorMsg = t('notificationErrors.noUserIdPreferences');
+            const errorMsg = 'No user ID available for fetching preferences. Please ensure you are logged in.';
             console.warn(errorMsg);
             console.log('Auth user:', currentUser);
             console.log('Profile:', profile);
@@ -181,7 +181,7 @@ export default function Notifications() {
             console.log('Preferences loaded successfully:', data);
             setPreferences(data);
         } catch (err) {
-            const errorMsg = err.response?.data?.detail || err.message || t('notificationErrors.failedLoadPreferences');
+            const errorMsg = err.response?.data?.detail || err.message || 'Failed to load preferences';
             console.error('Error fetching preferences:', err);
             console.error('Error details:', {
                 message: err.message,
@@ -234,7 +234,7 @@ export default function Notifications() {
         const userId = getUserId();
 
         if (!userId) {
-            alert(t('notificationErrors.userNotAuthenticated'));
+            alert('User not authenticated. Please log in.');
             return;
         }
 
@@ -245,7 +245,7 @@ export default function Notifications() {
             alert('Preferences updated successfully');
         } catch (err) {
             console.error('Error updating preferences:', err);
-            alert(t('notificationErrors.failedUpdatePreferences'));
+            alert('Failed to update preferences');
         } finally {
             setSavingPreferences(false);
         }

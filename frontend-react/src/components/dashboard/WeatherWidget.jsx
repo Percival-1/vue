@@ -46,17 +46,6 @@ export default function WeatherWidget({ data, loading, error, location }) {
 
     const current = data.current || data;
 
-    // Extract weather values, handling various API response shapes
-    // OpenWeatherMap returns: { main: { temp, feels_like, humidity }, wind: { speed }, weather: [{ description }] }
-    // Our backend may return: { temperature, condition, humidity, wind_speed, feels_like }
-    const temp = current.temperature ?? current.temp ?? current.main?.temp ?? null;
-    const feelsLike = current.feels_like ?? current.main?.feels_like ?? null;
-    const humidity = current.humidity ?? current.main?.humidity ?? null;
-    const windSpeed = current.wind_speed ?? current.wind ?? current.wind?.speed ?? null;
-    const condition = current.condition ?? current.description ?? current.weather?.[0]?.description ?? null;
-
-    const noData = t('dashboard.noData');
-
     return (
         <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-4">
@@ -78,10 +67,10 @@ export default function WeatherWidget({ data, loading, error, location }) {
                         <FaCloudSun size={48} className="text-yellow-500" />
                         <div>
                             <p className="text-4xl font-bold text-gray-800">
-                                {temp !== null ? `${Math.round(temp)}°C` : noData}
+                                {current.temperature || current.temp || t('dashboard.noData')}°C
                             </p>
                             <p className="text-gray-600 capitalize">
-                                {condition || noData}
+                                {current.condition || current.description || t('dashboard.noData')}
                             </p>
                         </div>
                     </div>
@@ -93,21 +82,21 @@ export default function WeatherWidget({ data, loading, error, location }) {
                         <FaTint className="text-blue-500 mx-auto mb-1" size={20} />
                         <p className="text-xs text-gray-500">{t('weather.humidity')}</p>
                         <p className="text-sm font-semibold text-gray-800">
-                            {humidity !== null ? `${humidity}%` : noData}
+                            {current.humidity || t('dashboard.noData')}%
                         </p>
                     </div>
                     <div className="text-center">
                         <FaWind className="text-gray-500 mx-auto mb-1" size={20} />
                         <p className="text-xs text-gray-500">{t('weather.wind')}</p>
                         <p className="text-sm font-semibold text-gray-800">
-                            {windSpeed !== null ? `${windSpeed} km/h` : noData}
+                            {current.wind_speed || current.wind || t('dashboard.noData')} km/h
                         </p>
                     </div>
                     <div className="text-center">
                         <FaTemperatureHigh className="text-red-500 mx-auto mb-1" size={20} />
                         <p className="text-xs text-gray-500">{t('dashboard.feelsLike')}</p>
                         <p className="text-sm font-semibold text-gray-800">
-                            {feelsLike !== null ? `${Math.round(feelsLike)}°C` : noData}
+                            {current.feels_like || current.temperature || t('dashboard.noData')}°C
                         </p>
                     </div>
                 </div>

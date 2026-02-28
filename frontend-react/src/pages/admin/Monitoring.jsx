@@ -11,6 +11,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler,
 } from 'chart.js';
 import {
     FaCheckCircle,
@@ -38,7 +39,8 @@ ChartJS.register(
     ArcElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
 );
 
 export default function Monitoring() {
@@ -389,8 +391,8 @@ export default function Monitoring() {
                                         <div
                                             key={alert.id}
                                             className={`flex items-center justify-between p-3 rounded-lg border ${alert.resolved
-                                                    ? 'bg-gray-50 border-gray-200'
-                                                    : 'bg-yellow-50 border-yellow-200'
+                                                ? 'bg-gray-50 border-gray-200'
+                                                : 'bg-yellow-50 border-yellow-200'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">

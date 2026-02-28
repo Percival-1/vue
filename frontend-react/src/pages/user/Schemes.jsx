@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     FaSearch,
     FaBookmark,
@@ -27,7 +28,6 @@ import { Card, ErrorAlert, Input, Button } from '../../components/common';
  * - Bookmark functionality
  */
 export default function Schemes() {
-    const { t } = useTranslation();
     const profile = useSelector(selectProfile);
     const navigate = useNavigate();
 
@@ -89,10 +89,7 @@ export default function Schemes() {
      * Search schemes manually
      */
     const handleSearch = async () => {
-        if (!searchQuery.trim() && !selectedCategory && !selectedType) {
-            setError('Please enter a search term or select filters');
-            return;
-        }
+        const searchTerm = searchQuery.trim() || 'government schemes for farmers';
 
         setLoadingSchemes(true);
         setError(null);
@@ -104,7 +101,7 @@ export default function Schemes() {
             setActiveView('search');
         } catch (err) {
             console.error('Error searching schemes:', err);
-            setError(t('schemeErrors.failedSearch'));
+            setError('Failed to search schemes. Please try again.');
         } finally {
             setLoadingSchemes(false);
         }
@@ -126,7 +123,7 @@ export default function Schemes() {
             setActiveView('details');
         } catch (err) {
             console.error('Error fetching scheme details:', err);
-            setError(t('schemeErrors.failedLoadDetails'));
+            setError('Failed to load scheme details. Please try again.');
         } finally {
             setLoadingSchemes(false);
         }
@@ -150,7 +147,7 @@ export default function Schemes() {
             setEligibilityResult(response);
         } catch (err) {
             console.error('Error checking eligibility:', err);
-            setError(t('schemeErrors.failedCheckEligibility'));
+            setError('Failed to check eligibility. Please try again.');
         } finally {
             setLoadingEligibility(false);
         }
@@ -280,7 +277,7 @@ export default function Schemes() {
                             size="sm"
                             onClick={() => handleViewDetails(scheme)}
                         >
-                            {t('schemes.viewDetails')}
+                            View Details
                         </Button>
                         <Button
                             size="sm"
@@ -304,35 +301,12 @@ export default function Schemes() {
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">{t('schemes.governmentSchemes')}</h1>
+                        <h1 className="text-3xl font-bold text-gray-800">Government Schemes</h1>
                         <p className="text-sm text-gray-600 mt-1">
-                            Discover subsidies and benefits you're eligible for
+                            {profile?.state
+                                ? `Schemes for ${profile.state} + Central Schemes`
+                                : 'Central Government Schemes'}
                         </p>
-                    </div>
-
-                    {/* View Toggle */}
-                    <div className="flex gap-2">
-                        <Button
-                            variant={activeView === 'search' ? 'primary' : 'outline'}
-                            size="sm"
-                            onClick={() => setActiveView('search')}
-                        >
-                            <FaSearch className="mr-2" />
-                            Search
-                        </Button>
-                        <Button
-                            variant={activeView === 'recommendations' ? 'primary' : 'outline'}
-                            size="sm"
-                            onClick={() => {
-                                setActiveView('recommendations');
-                                if (recommendations.length === 0) {
-                                    fetchRecommendations();
-                                }
-                            }}
-                        >
-                            <FaInfoCircle className="mr-2" />
-                            Recommendations
-                        </Button>
                     </div>
                 </div>
             </div>
@@ -356,64 +330,40 @@ export default function Schemes() {
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                        placeholder={t('schemes.searchForSchemes')}
+                                        placeholder="Search schemes by name, keyword, or benefit..."
                                         icon={<FaSearch />}
                                         className="h-full"
                                     />
                                 </div>
-                                <Button onClick={handleSearch} disabled={isLoading}>
-                                    <FaSearch className="mr-2" />
-                                    Search
+                                <Button
+                                    onClick={handleSearch}
+                                    disabled={isLoading}
+                                    className="whitespace-nowrap"
+                                >
+                                    {isLoading ? (
+                                        <ClipLoader color="#ffffff" size={16} />
+                                    ) : (
+                                        <>
+                                            <FaSearch className="mr-2" />
+                                            Search
+                                        </>
+                                    )}
                                 </Button>
                             </div>
 
-                            {/* Filters */}
-                            <div className="flex flex-wrap gap-4">
-                                <div className="flex-1 min-w-[200px]">
-                                    <select
-                                        id="category-filter"
-                                        name="category"
-                                        value={selectedCategory}
-                                        onChange={(e) => setSelectedCategory(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        disabled={isLoading}
-                                    >
-                                        <option value="">All Categories</option>
-                                        {CATEGORIES.map((cat) => (
-                                            <option key={cat} value={cat}>{cat}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="flex-1 min-w-[200px]">
-                                    <select
-                                        id="type-filter"
-                                        name="type"
-                                        value={selectedType}
-                                        onChange={(e) => setSelectedType(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        disabled={isLoading}
-                                    >
-                                        <option value="">All Types</option>
-                                        {TYPES.map((type) => (
-                                            <option key={type} value={type}>{type}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <input
-                                        type="checkbox"
-                                        id="bookmarks-only"
-                                        checked={showBookmarksOnly}
-                                        onChange={(e) => setShowBookmarksOnly(e.target.checked)}
-                                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                                    />
-                                    <label htmlFor="bookmarks-only" className="text-sm text-gray-700">
-                                        <FaBookmark className="inline mr-1 text-yellow-500" />
-                                        Bookmarks Only
-                                    </label>
-                                </div>
+                            {/* Bookmarks Filter */}
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    id="bookmarks-only"
+                                    checked={showBookmarksOnly}
+                                    onChange={(e) => setShowBookmarksOnly(e.target.checked)}
+                                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                />
+                                <label htmlFor="bookmarks-only" className="text-sm text-gray-700">
+                                    <FaBookmark className="inline mr-1 text-yellow-500" />
+                                    Bookmarks Only
+                                </label>
                             </div>
                         </div>
                     </Card>
@@ -434,48 +384,7 @@ export default function Schemes() {
                                 <p className="text-gray-500">
                                     {showBookmarksOnly
                                         ? 'No bookmarked schemes yet. Start exploring and bookmark schemes you\'re interested in!'
-                                        : 'No schemes found. Try different search terms or filters.'}
-                                </p>
-                            </div>
-                        </Card>
-                    )}
-                </>
-            )}
-
-            {/* Recommendations View */}
-            {activeView === 'recommendations' && (
-                <>
-                    <Card>
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-bold">Personalized Recommendations</h2>
-                            <Button
-                                size="sm"
-                                onClick={fetchRecommendations}
-                                disabled={loadingRecommendations}
-                            >
-                                Refresh
-                            </Button>
-                        </div>
-                        <p className="text-sm text-gray-600">
-                            Based on your profile: {profile?.location && `${profile.location}, `}
-                            {profile?.crops && `Crops: ${profile.crops.join(', ')}`}
-                        </p>
-                    </Card>
-
-                    {loadingRecommendations ? (
-                        <div className="flex justify-center py-12">
-                            <ClipLoader color="#3B82F6" size={50} />
-                        </div>
-                    ) : recommendations.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {recommendations.map((scheme) => renderSchemeCard(scheme))}
-                        </div>
-                    ) : (
-                        <Card>
-                            <div className="text-center py-12">
-                                <FaInfoCircle className="text-6xl text-gray-300 mx-auto mb-4" />
-                                <p className="text-gray-500">
-                                    No recommendations available. Complete your profile to get personalized scheme recommendations.
+                                        : 'No schemes found. Try different search terms.'}
                                 </p>
                             </div>
                         </Card>
@@ -492,7 +401,7 @@ export default function Schemes() {
                         size="sm"
                         onClick={() => setActiveView('search')}
                     >
-                        ← {t('schemes.backToSearch')}
+                        ← Back to Search
                     </Button>
 
                     {/* Scheme Details Card */}
@@ -540,16 +449,16 @@ export default function Schemes() {
 
                             {/* Description */}
                             <div>
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('common.description')}</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
                                 <p className="text-gray-700">
-                                    {selectedScheme.description || selectedScheme.summary || t('schemes.noDescription')}
+                                    {selectedScheme.description || selectedScheme.summary || 'No description available'}
                                 </p>
                             </div>
 
                             {/* Benefits */}
                             {selectedScheme.benefits && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('schemes.benefits')}</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Benefits</h3>
                                     {Array.isArray(selectedScheme.benefits) ? (
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
                                             {selectedScheme.benefits.map((benefit, index) => (
@@ -565,7 +474,7 @@ export default function Schemes() {
                             {/* Eligibility Criteria */}
                             {selectedScheme.eligibility_criteria && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('schemes.eligibilityCriteria')}</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Eligibility Criteria</h3>
                                     {Array.isArray(selectedScheme.eligibility_criteria) ? (
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
                                             {selectedScheme.eligibility_criteria.map((criteria, index) => (
@@ -583,7 +492,7 @@ export default function Schemes() {
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                                         <FaFileAlt className="inline mr-2" />
-                                        {t('schemes.requiredDocuments')}
+                                        Required Documents
                                     </h3>
                                     {Array.isArray(selectedScheme.required_documents) ? (
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
@@ -600,7 +509,7 @@ export default function Schemes() {
                             {/* Application Process */}
                             {selectedScheme.application_process && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('schemes.applicationProcess')}</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Application Process</h3>
                                     {Array.isArray(selectedScheme.application_process) ? (
                                         <ol className="list-decimal list-inside space-y-1 text-gray-700">
                                             {selectedScheme.application_process.map((step, index) => (
@@ -623,25 +532,25 @@ export default function Schemes() {
                                         className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                                     >
                                         <FaExternalLinkAlt className="mr-2" />
-                                        {t('schemes.applyOnline')}
+                                        Apply Online
                                     </a>
                                 </div>
                             )}
 
                             {/* Eligibility Checker */}
                             <div className="border-t pt-6">
-                                <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('schemes.checkYourEligibility')}</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 mb-4">Check Your Eligibility</h3>
                                 <Button
                                     onClick={handleCheckEligibility}
                                     disabled={loadingEligibility || !profile}
                                     loading={loadingEligibility}
                                 >
-                                    {t('schemes.checkEligibility')}
+                                    Check Eligibility
                                 </Button>
 
                                 {!profile && (
                                     <p className="text-sm text-gray-500 mt-2">
-                                        {t('schemes.completeProfileForEligibility')}
+                                        Complete your profile to check eligibility
                                     </p>
                                 )}
 
@@ -664,11 +573,11 @@ export default function Schemes() {
                                                     }`}>
                                                     {eligibilityResult.eligible || eligibilityResult.is_eligible
                                                         ? 'You are eligible for this scheme!'
-                                                        : 'You are not eligible for this scheme'}
+                                                        : 'You may not be eligible for this scheme'}
                                                 </h4>
                                                 {eligibilityResult.eligibility_reasons && eligibilityResult.eligibility_reasons.length > 0 && (
                                                     <div className="mt-2">
-                                                        <p className="text-sm font-medium text-gray-700">Missing criteria:</p>
+                                                        <p className="text-sm font-medium text-gray-700">Reasons:</p>
                                                         <ul className="list-disc list-inside text-sm text-gray-600 mt-1">
                                                             {eligibilityResult.eligibility_reasons.map((reason, index) => (
                                                                 <li key={index}>{reason}</li>

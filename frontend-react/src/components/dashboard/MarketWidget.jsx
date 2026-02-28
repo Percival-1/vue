@@ -1,38 +1,15 @@
-import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FaChartLine, FaArrowUp, FaArrowDown, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChartLine, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
 
 /**
  * Market Widget Component
- * Displays market price comparison as a horizontal slider
+ * Displays market prices for user crops
  * Requirement 20.3: Display market prices for user's crops
  */
 export default function MarketWidget({ data, loading, error, crops }) {
     const { t } = useTranslation();
-    const sliderRef = useRef(null);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
-
-    const updateScrollButtons = () => {
-        if (sliderRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-            setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 5);
-        }
-    };
-
-    const scroll = (direction) => {
-        if (sliderRef.current) {
-            const cardWidth = 220;
-            sliderRef.current.scrollBy({
-                left: direction === 'left' ? -cardWidth : cardWidth,
-                behavior: 'smooth',
-            });
-            setTimeout(updateScrollButtons, 350);
-        }
-    };
 
     if (loading) {
         return (
@@ -67,21 +44,8 @@ export default function MarketWidget({ data, loading, error, crops }) {
         );
     }
 
-    // Extract price comparison data from market intelligence response
-    const prices = data.price_comparison?.prices || data.prices || [data];
-    const averagePrice = data.price_comparison?.average_price || data.average_price || null;
+    const prices = data.prices || [data];
     const cropName = Array.isArray(crops) ? crops[0] : crops;
-
-    if (!prices || prices.length === 0) {
-        return (
-            <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">{t('dashboard.marketPrices')}</h2>
-                <div className="text-center text-gray-500 py-8">
-                    <p>{t('dashboard.noMarketData')}</p>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="bg-white rounded-lg shadow p-6">
@@ -92,105 +56,51 @@ export default function MarketWidget({ data, loading, error, crops }) {
                 </Link>
             </div>
 
-            {/* Crop Name */}
-            <div className="flex items-center space-x-2 mb-4">
-                <FaChartLine className="text-green-500" size={18} />
-                <span className="text-gray-700 font-medium capitalize">
-                    {cropName ? t('dashboard.priceFor', { crop: cropName }) : t('profile.crops')}
-                </span>
-                {averagePrice && (
-                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full ml-auto">
-                        Avg: ₹{averagePrice.toLocaleString('en-IN')}
+            <div className="space-y-4">
+                {/* Crop Name */}
+                <div className="flex items-center space-x-2">
+                    <FaChartLine className="text-green-500" size={20} />
+                    <span className="text-gray-700 font-medium capitalize">
+                        {cropName ? t('dashboard.priceFor', { crop: cropName }) : t('profile.crops')}
                     </span>
-                )}
-            </div>
+                </div>
 
-            {/* Horizontal Slider */}
-            <div className="relative">
-                {/* Left Arrow */}
-                {canScrollLeft && (
-                    <button
-                        onClick={() => scroll('left')}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-100 transition-colors border border-gray-200"
-                        style={{ marginLeft: '-12px' }}
-                    >
-                        <FaChevronLeft className="text-gray-600" size={14} />
-                    </button>
-                )}
+                {/* Price Information */}
+                {prices.slice(0, 3).map((price, index) => {
+                    const priceChange = price.change || price.price_change || 0;
+                    const isPositive = priceChange >= 0;
 
-                {/* Slider Container */}
-                <div
-                    ref={sliderRef}
-                    onScroll={updateScrollButtons}
-                    className="flex gap-3 overflow-x-auto pb-2"
-                    style={{
-                        scrollbarWidth: 'none',
-                        msOverflowStyle: 'none',
-                        WebkitOverflowScrolling: 'touch',
-                    }}
-                >
-                    <style>{`
-                        .market-slider::-webkit-scrollbar { display: none; }
-                    `}</style>
-                    {prices.map((price, index) => {
-                        const priceValue = price.price_per_quintal || price.price || price.current_price || 0;
-                        const mandiName = price.mandi_name || price.mandi || price.market || 'Unknown';
-                        const avgDiff = averagePrice
-                            ? ((priceValue - averagePrice) / averagePrice * 100).toFixed(1)
-                            : (price.change || price.price_change || 0);
-                        const isPositive = Number(avgDiff) >= 0;
-
-                        return (
-                            <div
-                                key={index}
-                                className="flex-shrink-0 bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow"
-                                style={{ minWidth: '200px', maxWidth: '220px' }}
-                            >
-                                {/* Mandi Name */}
-                                <p className="text-sm font-semibold text-gray-800 mb-2 truncate" title={mandiName}>
-                                    {mandiName}
-                                </p>
-
-                                {/* Price */}
-                                <p className="text-2xl font-bold text-gray-900 mb-1">
-                                    ₹{priceValue.toLocaleString('en-IN')}
-                                </p>
-                                <p className="text-xs text-gray-500 mb-3">{t('dashboard.perQuintal')}</p>
-
-                                {/* vs Average */}
-                                <div className={`flex items-center gap-1 text-sm font-semibold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                                    {isPositive ? <FaArrowUp size={12} /> : <FaArrowDown size={12} />}
-                                    <span>{isPositive ? '+' : ''}{avgDiff}%</span>
-                                    <span className="text-xs text-gray-400 font-normal ml-1">vs avg</span>
+                    return (
+                        <div key={index} className="border-b pb-3 last:border-b-0">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-sm text-gray-600">
+                                        {price.mandi || price.market || t('market.location')}
+                                    </p>
+                                    <p className="text-2xl font-bold text-gray-800">
+                                        ₹{price.price || price.current_price || t('dashboard.noData')}
+                                        <span className="text-sm text-gray-500 font-normal">{t('dashboard.perQuintal')}</span>
+                                    </p>
+                                </div>
+                                <div className={`flex items-center space-x-1 ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                                    {isPositive ? <FaArrowUp size={16} /> : <FaArrowDown size={16} />}
+                                    <span className="font-semibold">
+                                        {Math.abs(priceChange)}%
+                                    </span>
                                 </div>
                             </div>
-                        );
-                    })}
-                </div>
+                        </div>
+                    );
+                })}
 
-                {/* Right Arrow */}
-                {canScrollRight && prices.length > 2 && (
-                    <button
-                        onClick={() => scroll('right')}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-2 hover:bg-gray-100 transition-colors border border-gray-200"
-                        style={{ marginRight: '-12px' }}
-                    >
-                        <FaChevronRight className="text-gray-600" size={14} />
-                    </button>
+                {/* MSP Information if available */}
+                {data.msp && (
+                    <div className="bg-blue-50 rounded p-3 mt-4">
+                        <p className="text-xs text-gray-600">{t('market.msp')}</p>
+                        <p className="text-lg font-bold text-blue-600">₹{data.msp}{t('dashboard.perQuintal')}</p>
+                    </div>
                 )}
             </div>
-
-            {/* Scroll indicator dots */}
-            {prices.length > 2 && (
-                <div className="flex justify-center gap-1 mt-3">
-                    {prices.map((_, index) => (
-                        <div
-                            key={index}
-                            className="w-1.5 h-1.5 rounded-full bg-gray-300"
-                        />
-                    ))}
-                </div>
-            )}
         </div>
     );
 }

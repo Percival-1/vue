@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import {
     FaStore,
     FaChartLine,
@@ -61,7 +60,6 @@ ChartJS.register(
  * Requirements: 8.1-8.8
  */
 export default function Market() {
-    const { t } = useTranslation();
     const profile = useSelector(selectProfile);
 
     // Predefined locations for quick selection
@@ -212,7 +210,7 @@ export default function Market() {
         } catch (err) {
             console.error('Error fetching market data:', err);
             // Show more detailed error message
-            const errorMessage = err.message || err.detail || t('marketErrors.failedLoadMarket');
+            const errorMessage = err.message || err.detail || 'Failed to load market data. Please try again.';
             setError(errorMessage);
         } finally {
             setLoadingPrices(false);
@@ -382,9 +380,9 @@ export default function Market() {
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">{t('market.marketIntelligence')}</h1>
+                        <h1 className="text-3xl font-bold text-gray-800">Market Intelligence</h1>
                         <p className="text-sm text-gray-600 mt-1">
-                            {t('market.realTimeMarket')}
+                            Real-time market prices and selling recommendations
                         </p>
                     </div>
 
@@ -398,7 +396,7 @@ export default function Market() {
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             disabled={isLoading}
                         >
-                            <option value="">{t('market.selectCrop')}</option>
+                            <option value="">Select Crop</option>
                             {profile?.crops && profile.crops.map((crop) => (
                                 <option key={crop} value={crop}>{crop}</option>
                             ))}
@@ -420,7 +418,7 @@ export default function Market() {
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             disabled={isLoading}
                         >
-                            <option value="">{t('market.selectLocation')}</option>
+                            <option value="">Select Location</option>
                             {profile?.location && (
                                 <option value="custom">My Location ({profile.location})</option>
                             )}
@@ -435,7 +433,7 @@ export default function Market() {
                 <div className="bg-white p-4 rounded-lg border border-gray-200">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                         <FaSearch className="inline mr-2" />
-                        {t('market.searchLocationByAddress')}
+                        Search Location by Address
                     </label>
                     <GeocodingSearch
                         onLocationSelect={(location) => {
@@ -446,7 +444,7 @@ export default function Market() {
                             setCurrentLocationName(location.name || location.address);
                             setSelectedLocation('custom');
                         }}
-                        placeholder={t('market.searchLocationPlaceholder')}
+                        placeholder="Search for a location..."
                     />
                 </div>
 
@@ -455,8 +453,8 @@ export default function Market() {
                     <div className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
                         <p className="text-sm text-green-800">
                             <FaStore className="inline mr-2" />
-                            {t('market.showingMarketData')} <span className="font-semibold">{selectedCrop}</span>
-                            {' '}{t('market.in')} <span className="font-semibold">{currentLocationName}</span>
+                            Showing market data for: <span className="font-semibold">{selectedCrop}</span>
+                            {' '}in <span className="font-semibold">{currentLocationName}</span>
                         </p>
                     </div>
                 )}
@@ -469,11 +467,11 @@ export default function Market() {
             <div className="border-b border-gray-200">
                 <nav className="flex space-x-8">
                     {[
-                        { id: 'prices', label: t('market.currentPrices'), icon: FaStore },
-                        { id: 'comparison', label: t('market.priceComparison'), icon: FaFilter },
-                        { id: 'trends', label: t('market.priceTrends'), icon: FaChartLine },
-                        { id: 'map', label: t('market.nearestMandis'), icon: FaMapMarkerAlt },
-                        { id: 'recommendation', label: t('market.sellingAdvice'), icon: FaChartLine },
+                        { id: 'prices', label: 'Current Prices', icon: FaStore },
+                        { id: 'comparison', label: 'Price Comparison', icon: FaFilter },
+                        { id: 'trends', label: 'Price Trends', icon: FaChartLine },
+                        { id: 'map', label: 'Nearest Mandis', icon: FaMapMarkerAlt },
+                        { id: 'recommendation', label: 'Selling Advice', icon: FaChartLine },
                     ].map((tab) => (
                         <button
                             key={tab.id}
@@ -494,7 +492,7 @@ export default function Market() {
             {
                 activeTab === 'prices' && (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{t('market.currentPrices')}</h2>
+                        <h2 className="text-xl font-bold mb-4">Current Market Prices</h2>
                         {loadingPrices ? (
                             <div className="flex justify-center py-8">
                                 <ClipLoader color="#3B82F6" size={40} />
@@ -504,11 +502,11 @@ export default function Market() {
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.mandi')}</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.price')} (₹/{t('market.perQuintal')})</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.change')}</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.date')}</th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.actions')}</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mandi</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price (₹/quintal)</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Change</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -557,7 +555,7 @@ export default function Market() {
                                 </table>
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-center py-8">{t('market.noPriceData')}</p>
+                            <p className="text-gray-500 text-center py-8">No price data available</p>
                         )}
                     </Card>
                 )
@@ -567,7 +565,7 @@ export default function Market() {
             {
                 activeTab === 'comparison' && (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{t('market.priceComparisonAcrossMandis')}</h2>
+                        <h2 className="text-xl font-bold mb-4">Price Comparison Across Mandis</h2>
                         {loadingComparison ? (
                             <div className="flex justify-center py-8">
                                 <ClipLoader color="#3B82F6" size={40} />
@@ -578,10 +576,10 @@ export default function Market() {
                                     <table className="min-w-full divide-y divide-gray-200">
                                         <thead className="bg-gray-50">
                                             <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.mandi')}</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.price')} (₹/{t('market.perQuintal')})</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.vsAverage')}</th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">{t('market.location')}</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mandi</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price (₹/quintal)</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">vs Average</th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
@@ -614,7 +612,7 @@ export default function Market() {
                                 {priceComparison.average_price && (
                                     <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                                         <p className="text-sm text-blue-800">
-                                            {t('market.averagePrice')}: <span className="font-semibold">
+                                            Average Price: <span className="font-semibold">
                                                 {marketService.formatPrice(priceComparison.average_price)}
                                             </span>
                                         </p>
@@ -625,7 +623,7 @@ export default function Market() {
                                 )}
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-center py-8">{t('market.noComparisonData')}</p>
+                            <p className="text-gray-500 text-center py-8">No comparison data available</p>
                         )}
                     </Card>
                 )
@@ -635,7 +633,7 @@ export default function Market() {
             {
                 activeTab === 'trends' && (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{t('market.priceTrends')}</h2>
+                        <h2 className="text-xl font-bold mb-4">Price Trends</h2>
                         {loadingTrends ? (
                             <div className="flex justify-center py-8">
                                 <ClipLoader color="#3B82F6" size={40} />
@@ -645,7 +643,7 @@ export default function Market() {
                                 <Line data={getPriceTrendChartData()} options={chartOptions} />
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-center py-8">{t('market.noTrendData')}</p>
+                            <p className="text-gray-500 text-center py-8">No trend data available</p>
                         )}
                     </Card>
                 )
@@ -655,7 +653,7 @@ export default function Market() {
             {
                 activeTab === 'map' && (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{t('market.nearestMandis')}</h2>
+                        <h2 className="text-xl font-bold mb-4">Nearest Mandis</h2>
                         {loadingMandis ? (
                             <div className="flex justify-center py-8">
                                 <ClipLoader color="#3B82F6" size={40} />
@@ -698,7 +696,7 @@ export default function Market() {
                                                                 <h3 className="font-bold">{mandi.name || mandi.mandi_name}</h3>
                                                                 <p className="text-sm">{mandi.state || mandi.district}</p>
                                                                 <p className="text-sm text-gray-600">
-                                                                    {t('market.distance')}: {mandi.distance_km || mandi.distance ? `${(mandi.distance_km || mandi.distance).toFixed(1)} km` : 'N/A'}
+                                                                    Distance: {mandi.distance_km || mandi.distance ? `${(mandi.distance_km || mandi.distance).toFixed(1)} km` : 'N/A'}
                                                                 </p>
                                                             </div>
                                                         </Popup>
@@ -738,7 +736,7 @@ export default function Market() {
                                                 className="w-full mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
                                             >
                                                 <FaRoute />
-                                                {t('market.showRoute')}
+                                                Show Route
                                             </button>
                                         </div>
                                     ))}
@@ -746,7 +744,7 @@ export default function Market() {
                             </div >
                         ) : (
                             <p className="text-gray-500 text-center py-8">
-                                {t('market.noMandisFound')}
+                                No mandis found nearby. Try selecting a different location or increasing the search radius.
                             </p>
                         )}
                     </Card >
@@ -757,7 +755,7 @@ export default function Market() {
             {
                 activeTab === 'recommendation' && (
                     <Card>
-                        <h2 className="text-xl font-bold mb-4">{t('market.sellingRecommendation')}</h2>
+                        <h2 className="text-xl font-bold mb-4">Selling Recommendation</h2>
                         {loadingRecommendation ? (
                             <div className="flex justify-center py-8">
                                 <ClipLoader color="#3B82F6" size={40} />
@@ -767,7 +765,7 @@ export default function Market() {
                                 {/* Overall Recommendation */}
                                 {sellingRecommendation.recommendation && (
                                     <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
-                                        <h3 className="font-bold text-lg text-green-800 mb-2">{t('market.recommendation')}</h3>
+                                        <h3 className="font-bold text-lg text-green-800 mb-2">Recommendation</h3>
                                         <p className="text-gray-700">{sellingRecommendation.recommendation}</p>
                                     </div>
                                 )}
@@ -775,7 +773,7 @@ export default function Market() {
                                 {/* Best Mandis */}
                                 {sellingRecommendation.best_mandis && sellingRecommendation.best_mandis.length > 0 && (
                                     <div>
-                                        <h3 className="font-bold text-lg mb-3">{t('market.bestMandisToSell')}</h3>
+                                        <h3 className="font-bold text-lg mb-3">Best Mandis to Sell</h3>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {sellingRecommendation.best_mandis.map((mandi, index) => (
                                                 <div key={index} className="bg-blue-50 p-4 rounded-lg">
@@ -788,7 +786,7 @@ export default function Market() {
                                                             </p>
                                                             {mandi.distance && (
                                                                 <p className="text-sm text-gray-600 mt-1">
-                                                                    {t('market.distance')}: {mandi.distance} km
+                                                                    Distance: {mandi.distance} km
                                                                 </p>
                                                             )}
                                                         </div>
@@ -805,7 +803,7 @@ export default function Market() {
                                 {/* Timing Advice */}
                                 {sellingRecommendation.timing_advice && (
                                     <div className="bg-yellow-50 p-4 rounded-lg">
-                                        <h3 className="font-bold text-yellow-800 mb-2">{t('market.timingAdvice')}</h3>
+                                        <h3 className="font-bold text-yellow-800 mb-2">Timing Advice</h3>
                                         <p className="text-gray-700">{sellingRecommendation.timing_advice}</p>
                                     </div>
                                 )}
@@ -813,7 +811,7 @@ export default function Market() {
                                 {/* MSP Information */}
                                 {sellingRecommendation.msp && (
                                     <div className="bg-blue-50 p-4 rounded-lg">
-                                        <h3 className="font-bold text-blue-800 mb-2">{t('market.msp')}</h3>
+                                        <h3 className="font-bold text-blue-800 mb-2">Minimum Support Price (MSP)</h3>
                                         <p className="text-2xl font-bold text-blue-600">
                                             {marketService.formatPrice(sellingRecommendation.msp)}
                                         </p>
@@ -823,13 +821,13 @@ export default function Market() {
                                 {/* Expected Returns */}
                                 {sellingRecommendation.expected_returns && (
                                     <div className="bg-green-50 p-4 rounded-lg">
-                                        <h3 className="font-bold text-green-800 mb-2">{t('market.expectedReturns')}</h3>
+                                        <h3 className="font-bold text-green-800 mb-2">Expected Returns</h3>
                                         <p className="text-gray-700">{sellingRecommendation.expected_returns}</p>
                                     </div>
                                 )}
                             </div>
                         ) : (
-                            <p className="text-gray-500 text-center py-8">{t('market.noRecommendationData')}</p>
+                            <p className="text-gray-500 text-center py-8">No recommendation available</p>
                         )}
                     </Card>
                 )
@@ -841,7 +839,7 @@ export default function Market() {
                     <Card>
                         <h2 className="text-xl font-bold mb-4">
                             <FaStar className="inline text-yellow-500 mr-2" />
-                            {t('market.favorites')}
+                            Favorite Mandis
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {favoriteMandis.map((mandi, index) => (
@@ -904,7 +902,7 @@ export default function Market() {
                                         onClick={handleCloseRoute}
                                         className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
                                     >
-                                        {t('common.close')}
+                                        Close
                                     </button>
                                 </div>
                             </div>

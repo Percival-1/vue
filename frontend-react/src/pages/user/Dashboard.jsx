@@ -76,13 +76,11 @@ export default function Dashboard() {
             setLoadingWeather(true);
             setWeatherError(null);
             try {
-                const response = await weatherService.getCurrentWeather(profile.location);
-                // Backend returns { success: true, data: {...} } - unwrap it
-                const data = response.data || response;
+                const data = await weatherService.getCurrentWeather(profile.location);
                 setWeatherData(data);
             } catch (error) {
                 console.error('Error fetching weather:', error);
-                setWeatherError(t('dashboardErrors.failedLoadWeather'));
+                setWeatherError('Failed to load weather data');
             } finally {
                 setLoadingWeather(false);
             }
@@ -103,7 +101,7 @@ export default function Dashboard() {
 
             // Check if user has location coordinates
             if (!profile?.location_lat || !profile?.location_lng) {
-                setMarketError(t('dashboardErrors.locationRequired'));
+                setMarketError('Location coordinates required for market data');
                 setLoadingMarket(false);
                 return;
             }
@@ -121,7 +119,7 @@ export default function Dashboard() {
                 setMarketData(data);
             } catch (error) {
                 console.error('Error fetching market data:', error);
-                setMarketError(t('dashboardErrors.failedLoadMarket'));
+                setMarketError('Failed to load market data');
             } finally {
                 setLoadingMarket(false);
             }
@@ -154,7 +152,7 @@ export default function Dashboard() {
                 setStats(prev => ({ ...prev, activeSchemes: schemesArray.length }));
             } catch (error) {
                 console.error('Error fetching schemes:', error);
-                setSchemesError(t('dashboardErrors.failedLoadSchemes'));
+                setSchemesError('Failed to load schemes');
                 setSchemes([]); // Set to empty array on error
             } finally {
                 setLoadingSchemes(false);
@@ -197,7 +195,7 @@ export default function Dashboard() {
                 }));
             } catch (error) {
                 console.error('Error fetching notifications:', error);
-                setNotificationsError(t('dashboardErrors.failedLoadNotifications'));
+                setNotificationsError('Failed to load notifications');
                 setNotifications([]); // Set to empty array on error
             } finally {
                 setLoadingNotifications(false);
@@ -265,7 +263,7 @@ export default function Dashboard() {
                 />
                 <StatsCard
                     title={t('dashboard.weatherStatus')}
-                    value={weatherData?.description || weatherData?.condition || weatherData?.current?.condition || t('dashboard.noData')}
+                    value={weatherData?.current?.condition || t('dashboard.noData')}
                     icon={FaCloudSun}
                     color="purple"
                     link="/weather"

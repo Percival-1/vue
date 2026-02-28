@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { FaPaperPlane, FaImage, FaTimes } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
 import Button from '../common/Button';
 import VoiceMessageButton from './VoiceMessageButton';
 
@@ -12,7 +11,6 @@ import VoiceMessageButton from './VoiceMessageButton';
  * Requirement: 5.2, 21.13
  */
 export default function ChatInput({ onSendMessage, disabled = false, language = 'en' }) {
-    const { t } = useTranslation();
     const [message, setMessage] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -29,7 +27,7 @@ export default function ChatInput({ onSendMessage, disabled = false, language = 
             // Validate image
             const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
             if (!validTypes.includes(file.type)) {
-                alert(t('componentErrors.invalidImageFormat'));
+                alert('Invalid image format. Please select JPEG, PNG, or WebP.');
                 return;
             }
 

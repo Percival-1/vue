@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { FaUser, FaMapMarkerAlt, FaSeedling, FaRulerCombined, FaLanguage, FaEdit, FaSave, FaTimes, FaCheckCircle } from 'react-icons/fa';
 import userService from '../../api/services/userService';
 import { updateProfile as updateProfileAction } from '../../store/slices/userSlice';
@@ -24,7 +23,6 @@ import { indianStates, getDistrictsByState } from '../../data/indianStatesDistri
  * Requirements: 2.1-2.8
  */
 export default function Profile() {
-    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { profile, loading: userLoading, refreshUser } = useCurrentUser();
 
@@ -191,7 +189,7 @@ export default function Profile() {
             setTimeout(() => setSuccess(false), 3000);
         } catch (err) {
             console.error('Profile update error:', err);
-            setError(err.message || t('profilePage.failedUpdateProfile'));
+            setError(err.message || 'Failed to update profile. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -287,7 +285,7 @@ export default function Profile() {
             <div className="p-8">
                 <Card>
                     <div className="text-center py-8">
-                        <p className="text-gray-600">{t('profilePage.noProfileData')}</p>
+                        <p className="text-gray-600">No profile data available. Please log in again.</p>
                     </div>
                 </Card>
             </div>
@@ -298,9 +296,9 @@ export default function Profile() {
         <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
             {/* Header */}
             <div className="mb-6">
-                <h1 className="text-3xl font-bold text-gray-900">{t('profilePage.myProfile')}</h1>
+                <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
                 <p className="mt-2 text-sm text-gray-600">
-                    {t('profilePage.manageInfo')}
+                    Manage your personal information and preferences
                 </p>
             </div>
 
@@ -308,7 +306,7 @@ export default function Profile() {
             {success && (
                 <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center" role="alert">
                     <FaCheckCircle className="mr-2" />
-                    <span>{t('profilePage.profileUpdatedSuccess')}</span>
+                    <span>Profile updated successfully!</span>
                 </div>
             )}
 
@@ -323,7 +321,7 @@ export default function Profile() {
             <Card className="mb-6">
                 <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-gray-900">{t('profilePage.profileCompletion')}</h2>
+                        <h2 className="text-xl font-semibold text-gray-900">Profile Completion</h2>
                         <span className={`text-2xl font-bold ${isProfileComplete ? 'text-green-600' : 'text-orange-600'}`}>
                             {profileCompletion}%
                         </span>
@@ -340,7 +338,7 @@ export default function Profile() {
                     {/* Missing Fields */}
                     {!isProfileComplete && missingFields.length > 0 && (
                         <div className="text-sm text-gray-600">
-                            <p className="font-medium mb-2">{t('profilePage.missingInfo')}</p>
+                            <p className="font-medium mb-2">Missing information:</p>
                             <ul className="list-disc list-inside space-y-1">
                                 {missingFields.map((field) => (
                                     <li key={field} className="capitalize">
@@ -354,7 +352,7 @@ export default function Profile() {
                     {isProfileComplete && (
                         <p className="text-sm text-green-600 flex items-center">
                             <FaCheckCircle className="mr-2" />
-                            {t('profilePage.profileComplete')}
+                            Your profile is complete!
                         </p>
                     )}
                 </div>
@@ -365,14 +363,14 @@ export default function Profile() {
                 <div className="p-6">
                     {/* Header with Edit Button */}
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-xl font-semibold text-gray-900">{t('profilePage.profileInfo')}</h2>
+                        <h2 className="text-xl font-semibold text-gray-900">Profile Information</h2>
                         {!isEditing && (
                             <button
                                 onClick={() => setIsEditing(true)}
                                 className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                             >
                                 <FaEdit className="mr-2" />
-                                {t('profilePage.editProfile')}
+                                Edit Profile
                             </button>
                         )}
                     </div>
@@ -384,8 +382,8 @@ export default function Profile() {
                             <div className="flex items-start">
                                 <FaUser className="h-5 w-5 text-gray-400 mt-1 mr-3" />
                                 <div>
-                                    <p className="text-sm font-medium text-gray-500">{t('profilePage.fullName')}</p>
-                                    <p className="text-base text-gray-900">{profile.name || t('profilePage.notProvided')}</p>
+                                    <p className="text-sm font-medium text-gray-500">Full Name</p>
+                                    <p className="text-base text-gray-900">{profile.name || 'Not provided'}</p>
                                 </div>
                             </div>
 
@@ -393,8 +391,8 @@ export default function Profile() {
                             <div className="flex items-start">
                                 <FaUser className="h-5 w-5 text-gray-400 mt-1 mr-3" />
                                 <div>
-                                    <p className="text-sm font-medium text-gray-500">{t('profilePage.phoneNumber')}</p>
-                                    <p className="text-base text-gray-900">{profile.phone_number || t('profilePage.notProvided')}</p>
+                                    <p className="text-sm font-medium text-gray-500">Phone Number</p>
+                                    <p className="text-base text-gray-900">{profile.phone_number || 'Not provided'}</p>
                                 </div>
                             </div>
 
@@ -402,8 +400,8 @@ export default function Profile() {
                             <div className="flex items-start">
                                 <FaMapMarkerAlt className="h-5 w-5 text-gray-400 mt-1 mr-3" />
                                 <div className="flex-1">
-                                    <p className="text-sm font-medium text-gray-500">{t('profilePage.location')}</p>
-                                    <p className="text-base text-gray-900">{profile.location || profile.location_address || t('profilePage.notProvided')}</p>
+                                    <p className="text-sm font-medium text-gray-500">Location</p>
+                                    <p className="text-base text-gray-900">{profile.location || profile.location_address || 'Not provided'}</p>
                                     {(profile.district || profile.state) && (
                                         <p className="text-sm text-gray-600 mt-1">
                                             {[profile.district, profile.state].filter(Boolean).join(', ')}
@@ -411,7 +409,7 @@ export default function Profile() {
                                     )}
                                     {(profile.location_lat && profile.location_lng) && (
                                         <p className="text-xs text-gray-500 mt-1">
-                                            {t('profilePage.coordinates')}: {profile.location_lat}, {profile.location_lng}
+                                            Coordinates: {profile.location_lat}, {profile.location_lng}
                                         </p>
                                     )}
                                 </div>
@@ -421,7 +419,7 @@ export default function Profile() {
                             <div className="flex items-start">
                                 <FaSeedling className="h-5 w-5 text-gray-400 mt-1 mr-3" />
                                 <div>
-                                    <p className="text-sm font-medium text-gray-500">{t('profilePage.crops')}</p>
+                                    <p className="text-sm font-medium text-gray-500">Crops</p>
                                     {profile.crops && profile.crops.length > 0 ? (
                                         <div className="flex flex-wrap gap-2 mt-1">
                                             {profile.crops.map((crop) => (
@@ -434,7 +432,7 @@ export default function Profile() {
                                             ))}
                                         </div>
                                     ) : (
-                                        <p className="text-base text-gray-900">{t('profilePage.notProvided')}</p>
+                                        <p className="text-base text-gray-900">Not provided</p>
                                     )}
                                 </div>
                             </div>
@@ -443,9 +441,9 @@ export default function Profile() {
                             <div className="flex items-start">
                                 <FaRulerCombined className="h-5 w-5 text-gray-400 mt-1 mr-3" />
                                 <div>
-                                    <p className="text-sm font-medium text-gray-500">{t('profilePage.landSize')}</p>
+                                    <p className="text-sm font-medium text-gray-500">Land Size</p>
                                     <p className="text-base text-gray-900">
-                                        {profile.land_size ? `${profile.land_size} ${t('profilePage.acres')}` : t('profilePage.notProvided')}
+                                        {profile.land_size ? `${profile.land_size} acres` : 'Not provided'}
                                     </p>
                                 </div>
                             </div>
@@ -454,9 +452,9 @@ export default function Profile() {
                             <div className="flex items-start">
                                 <FaLanguage className="h-5 w-5 text-gray-400 mt-1 mr-3" />
                                 <div>
-                                    <p className="text-sm font-medium text-gray-500">{t('profilePage.preferredLanguage')}</p>
+                                    <p className="text-sm font-medium text-gray-500">Preferred Language</p>
                                     <p className="text-base text-gray-900">
-                                        {languages.find(lang => lang.value === profile.language)?.label || profile.language || t('profilePage.notProvided')}
+                                        {languages.find(lang => lang.value === profile.language)?.label || profile.language || 'Not provided'}
                                     </p>
                                 </div>
                             </div>
@@ -469,7 +467,7 @@ export default function Profile() {
                             {/* Name Field */}
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.fullName')} <span className="text-red-500">*</span>
+                                    Full Name <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -478,18 +476,18 @@ export default function Profile() {
                                     <input
                                         id="name"
                                         type="text"
-                                        placeholder={t('profilePage.enterFullName')}
+                                        placeholder="Enter your full name"
                                         className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.name ? 'border-red-300' : 'border-gray-300'
                                             } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                         {...register('name', {
-                                            required: t('profilePage.nameRequired'),
+                                            required: 'Name is required',
                                             minLength: {
                                                 value: 2,
-                                                message: t('profilePage.nameMinLength')
+                                                message: 'Name must be at least 2 characters'
                                             },
                                             maxLength: {
                                                 value: 100,
-                                                message: t('profilePage.nameMaxLength')
+                                                message: 'Name must not exceed 100 characters'
                                             }
                                         })}
                                     />
@@ -502,16 +500,16 @@ export default function Profile() {
                             {/* Location Field */}
                             <div>
                                 <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.location')} <span className="text-red-500">*</span>
+                                    Location <span className="text-red-500">*</span>
                                 </label>
                                 <Controller
                                     name="location"
                                     control={control}
                                     rules={{
-                                        required: t('profilePage.locationRequired'),
+                                        required: 'Location is required',
                                         minLength: {
                                             value: 2,
-                                            message: t('profilePage.locationMinLength')
+                                            message: 'Location must be at least 2 characters'
                                         }
                                     }}
                                     render={({ field }) => (
@@ -519,7 +517,7 @@ export default function Profile() {
                                             value={field.value}
                                             onChange={field.onChange}
                                             onSelect={handleLocationSelect}
-                                            placeholder={t('profilePage.searchLocation')}
+                                            placeholder="Search for your location..."
                                             error={!!errors.location}
                                             errorMessage={errors.location?.message}
                                         />
@@ -530,7 +528,7 @@ export default function Profile() {
                             {/* State Field */}
                             <div>
                                 <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.state')}
+                                    State
                                 </label>
                                 <select
                                     id="state"
@@ -545,20 +543,20 @@ export default function Profile() {
                                         }
                                     })}
                                 >
-                                    <option value="">{t('profilePage.selectState')}</option>
+                                    <option value="">Select State</option>
                                     {indianStates.map((state) => (
                                         <option key={state} value={state}>
                                             {state}
                                         </option>
                                     ))}
                                 </select>
-                                <p className="mt-1 text-xs text-gray-500">{t('profilePage.autoFilled')}</p>
+                                <p className="mt-1 text-xs text-gray-500">Auto-filled from location or select manually</p>
                             </div>
 
                             {/* District Field */}
                             <div>
                                 <label htmlFor="district" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.district')}
+                                    District
                                 </label>
                                 <select
                                     id="district"
@@ -567,7 +565,7 @@ export default function Profile() {
                                     {...register('district')}
                                 >
                                     <option value="">
-                                        {selectedState ? t('profilePage.selectDistrict') : t('profilePage.selectStateFirst')}
+                                        {selectedState ? 'Select District' : 'Select State First'}
                                     </option>
                                     {availableDistricts.map((district) => (
                                         <option key={district} value={district}>
@@ -575,13 +573,13 @@ export default function Profile() {
                                         </option>
                                     ))}
                                 </select>
-                                <p className="mt-1 text-xs text-gray-500">{t('profilePage.autoFilled')}</p>
+                                <p className="mt-1 text-xs text-gray-500">Auto-filled from location or select manually</p>
                             </div>
 
                             {/* Crops Field */}
                             <div>
                                 <label htmlFor="crops" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.cropsLabel')} <span className="text-red-500">*</span>
+                                    Crops <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -590,7 +588,7 @@ export default function Profile() {
                                     <input
                                         id="crops"
                                         type="text"
-                                        placeholder={t('profilePage.typeCropName')}
+                                        placeholder="Type crop name and press Enter"
                                         value={cropInput}
                                         onChange={(e) => setCropInput(e.target.value)}
                                         onKeyPress={handleCropKeyPress}
@@ -643,7 +641,7 @@ export default function Profile() {
                                     name="crops"
                                     control={control}
                                     rules={{
-                                        validate: (value) => value.length > 0 || t('profilePage.atLeastOneCrop')
+                                        validate: (value) => value.length > 0 || 'At least one crop is required'
                                     }}
                                     render={() => null}
                                 />
@@ -656,7 +654,7 @@ export default function Profile() {
                             {/* Land Size Field */}
                             <div>
                                 <label htmlFor="land_size" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.landSizeAcres')} <span className="text-red-500">*</span>
+                                    Land Size (acres) <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -666,18 +664,18 @@ export default function Profile() {
                                         id="land_size"
                                         type="number"
                                         step="0.01"
-                                        placeholder={t('profilePage.enterLandSize')}
+                                        placeholder="Enter land size in acres"
                                         className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.land_size ? 'border-red-300' : 'border-gray-300'
                                             } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                         {...register('land_size', {
-                                            required: t('profilePage.landSizeRequired'),
+                                            required: 'Land size is required',
                                             min: {
                                                 value: 0.01,
-                                                message: t('profilePage.landSizeMin')
+                                                message: 'Land size must be greater than 0'
                                             },
                                             max: {
                                                 value: 10000,
-                                                message: t('profilePage.landSizeMax')
+                                                message: 'Land size seems too large'
                                             }
                                         })}
                                     />
@@ -690,7 +688,7 @@ export default function Profile() {
                             {/* Language Field */}
                             <div>
                                 <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
-                                    {t('profilePage.preferredLang')} <span className="text-red-500">*</span>
+                                    Preferred Language <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -701,7 +699,7 @@ export default function Profile() {
                                         className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.language ? 'border-red-300' : 'border-gray-300'
                                             } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                         {...register('language', {
-                                            required: t('profilePage.langRequired')
+                                            required: 'Language preference is required'
                                         })}
                                     >
                                         {languages.map((lang) => (
@@ -728,7 +726,7 @@ export default function Profile() {
                                     ) : (
                                         <>
                                             <FaSave className="mr-2" />
-                                            {t('profilePage.saveChanges')}
+                                            Save Changes
                                         </>
                                     )}
                                 </button>
@@ -739,7 +737,7 @@ export default function Profile() {
                                     className="flex-1 flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     <FaTimes className="mr-2" />
-                                    {t('profilePage.cancel')}
+                                    Cancel
                                 </button>
                             </div>
                         </form>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { FaMapMarkerAlt, FaExchangeAlt, FaCalculator } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
-import { useTranslation } from 'react-i18next';
 import mapsService from '../../api/services/mapsService';
 import GeocodingSearch from './GeocodingSearch';
 
@@ -12,7 +11,6 @@ import GeocodingSearch from './GeocodingSearch';
  * Requirement 24.3: Calculate distance between two locations via Backend_API
  */
 export default function DistanceCalculator({ onDistanceCalculated }) {
-    const { t } = useTranslation();
     const [origin, setOrigin] = useState(null);
     const [destination, setDestination] = useState(null);
     const [mode, setMode] = useState('driving');
@@ -32,7 +30,7 @@ export default function DistanceCalculator({ onDistanceCalculated }) {
      */
     const calculateDistance = async () => {
         if (!origin || !destination) {
-            setError(t('maps.selectBothPoints'));
+            setError('Please select both origin and destination');
             return;
         }
 
@@ -153,8 +151,8 @@ export default function DistanceCalculator({ onDistanceCalculated }) {
                             key={travelMode.value}
                             onClick={() => setMode(travelMode.value)}
                             className={`p-3 border rounded-lg text-sm font-medium transition-colors ${mode === travelMode.value
-                                ? 'border-blue-500 bg-blue-50 text-blue-700'
-                                : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+                                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                                    : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
                                 }`}
                         >
                             <span className="text-2xl block mb-1">{travelMode.icon}</span>

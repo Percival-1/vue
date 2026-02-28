@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 import { FaMicrophone, FaFileAudio, FaVolumeUp, FaInfoCircle } from 'react-icons/fa'
 import { AudioRecorder, AudioUpload, TranscriptionResult, TextToSpeech } from '../../components/speech'
 import { speechService } from '../../api/services'
@@ -10,7 +9,6 @@ import { ClipLoader } from 'react-spinners'
  * Provides speech-to-text and text-to-speech functionality
  */
 export default function SpeechServices() {
-    const { t } = useTranslation()
     const [activeTab, setActiveTab] = useState('stt') // 'stt' or 'tts'
     const [transcriptionMode, setTranscriptionMode] = useState('upload') // 'upload' or 'record'
 
@@ -152,7 +150,7 @@ export default function SpeechServices() {
         const audioFile = transcriptionMode === 'upload' ? selectedAudioFile : recordedAudio
 
         if (!audioFile) {
-            setTranscriptionError(t('speechErrors.selectOrRecordAudio'))
+            setTranscriptionError('Please select or record an audio file')
             return
         }
 
@@ -178,7 +176,7 @@ export default function SpeechServices() {
             saveToLibrary(audioFile, result.text)
         } catch (err) {
             console.error('Transcription error:', err)
-            setTranscriptionError(err.message || t('speechErrors.failedTranscribe'))
+            setTranscriptionError(err.message || 'Failed to transcribe audio')
         } finally {
             setIsTranscribing(false)
         }
@@ -206,10 +204,10 @@ export default function SpeechServices() {
             {/* Page Header */}
             <div className="mb-6">
                 <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                    {t('speech.speechServices')}
+                    Speech Services
                 </h1>
                 <p className="text-gray-600">
-                    {t('speech.convertSpeechText')}
+                    Convert speech to text and text to speech
                 </p>
             </div>
 
@@ -227,7 +225,7 @@ export default function SpeechServices() {
                         `}
                     >
                         <FaMicrophone />
-                        <span>{t('speech.speechToText')}</span>
+                        <span>Speech-to-Text</span>
                     </button>
 
                     <button
@@ -241,7 +239,7 @@ export default function SpeechServices() {
                         `}
                     >
                         <FaVolumeUp />
-                        <span>{t('speech.textToSpeech')}</span>
+                        <span>Text-to-Speech</span>
                     </button>
                 </div>
             </div>
@@ -255,21 +253,21 @@ export default function SpeechServices() {
                             <FaInfoCircle className="text-blue-500 text-xl flex-shrink-0 mt-0.5" />
                             <div className="flex-1">
                                 <h3 className="font-medium text-blue-900 mb-2">
-                                    {t('speech.supportedFormatsLanguages')}
+                                    Supported Formats & Languages
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
                                     <div>
-                                        <span className="font-medium">{t('speech.formats')}:</span>{' '}
+                                        <span className="font-medium">Formats:</span>{' '}
                                         {supportedFormats.length > 0
                                             ? supportedFormats.join(', ')
                                             : 'WAV, MP3, OGG, WebM, FLAC, M4A'
                                         }
                                     </div>
                                     <div>
-                                        <span className="font-medium">{t('speech.languages')}:</span>{' '}
+                                        <span className="font-medium">Languages:</span>{' '}
                                         {supportedLanguages.length > 0
-                                            ? t('speech.languagesSupported', { count: supportedLanguages.length })
-                                            : t('speech.multipleLanguages')
+                                            ? `${supportedLanguages.length} languages supported`
+                                            : 'Multiple languages'
                                         }
                                     </div>
                                 </div>
@@ -280,7 +278,7 @@ export default function SpeechServices() {
                     {/* Language Selector */}
                     <div className="bg-white rounded-lg shadow-md p-4">
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t('speech.selectLanguage')}
+                            Select Language
                         </label>
                         <select
                             id="language-select"
@@ -311,7 +309,7 @@ export default function SpeechServices() {
                                 `}
                             >
                                 <FaFileAudio />
-                                <span>{t('speech.uploadAudio')}</span>
+                                <span>Upload Audio</span>
                             </button>
 
                             <button
@@ -325,7 +323,7 @@ export default function SpeechServices() {
                                 `}
                             >
                                 <FaMicrophone />
-                                <span>{t('speech.recordAudio')}</span>
+                                <span>Record Audio</span>
                             </button>
                         </div>
                     </div>
@@ -359,12 +357,12 @@ export default function SpeechServices() {
                                 {isTranscribing ? (
                                     <>
                                         <ClipLoader size={20} color="#ffffff" />
-                                        <span>{t('speech.transcribing')}</span>
+                                        <span>Transcribing...</span>
                                     </>
                                 ) : (
                                     <>
                                         <FaMicrophone size={20} />
-                                        <span>{t('speech.transcribeAudio')}</span>
+                                        <span>Transcribe Audio</span>
                                     </>
                                 )}
                             </button>
@@ -393,7 +391,7 @@ export default function SpeechServices() {
                     {audioLibrary.length > 0 && (
                         <div className="bg-white rounded-lg shadow-md p-6">
                             <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                                {t('speech.recentTranscriptions')}
+                                Recent Transcriptions
                             </h3>
                             <div className="space-y-3">
                                 {audioLibrary.slice(0, 5).map((entry) => (

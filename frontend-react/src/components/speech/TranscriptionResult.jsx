@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { FaCopy, FaCheck, FaEdit, FaSave, FaTimes, FaDownload } from 'react-icons/fa'
-import { useTranslation } from 'react-i18next'
 import { speechService } from '../../api/services'
 
 /**
@@ -20,7 +19,6 @@ const TranscriptionResult = ({
     onTextChange,
     editable = true,
 }) => {
-    const { t } = useTranslation()
     const [isEditing, setIsEditing] = useState(false)
     const [editedText, setEditedText] = useState(text)
     const [isCopied, setIsCopied] = useState(false)
@@ -143,8 +141,8 @@ const TranscriptionResult = ({
                             <button
                                 onClick={handleCopy}
                                 className={`p-2 transition-colors ${isCopied
-                                    ? 'text-green-600'
-                                    : 'text-gray-600 hover:text-blue-600'
+                                        ? 'text-green-600'
+                                        : 'text-gray-600 hover:text-blue-600'
                                     }`}
                                 title="Copy to clipboard"
                             >
@@ -184,12 +182,12 @@ const TranscriptionResult = ({
                     <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
                         <div
                             className={`h-2 rounded-full transition-all duration-300 ${confidence >= 0.9
-                                ? 'bg-green-500'
-                                : confidence >= 0.7
-                                    ? 'bg-yellow-500'
-                                    : confidence >= 0.5
-                                        ? 'bg-orange-500'
-                                        : 'bg-red-500'
+                                    ? 'bg-green-500'
+                                    : confidence >= 0.7
+                                        ? 'bg-yellow-500'
+                                        : confidence >= 0.5
+                                            ? 'bg-orange-500'
+                                            : 'bg-red-500'
                                 }`}
                             style={{ width: `${confidence * 100}%` }}
                         />
@@ -249,7 +247,7 @@ const TranscriptionResult = ({
             {confidence !== undefined && confidence < 0.5 && (
                 <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <p className="text-yellow-700 text-sm">
-                        ⚠️ {t('componentErrors.lowConfidenceWarning')}
+                        ⚠️ Low confidence score. Please review and edit the transcription for accuracy.
                     </p>
                 </div>
             )}

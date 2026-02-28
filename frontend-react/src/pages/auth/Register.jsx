@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { FaPhone, FaLock, FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import Loader from '../../components/common/Loader';
@@ -20,7 +19,6 @@ import Loader from '../../components/common/Loader';
  * Requirements: 1.2, 1.5, 1.6, 1.9
  */
 export default function Register() {
-    const { t } = useTranslation();
     const { register: registerUser, loading, error, clearError, checkPasswordStrength } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -111,10 +109,10 @@ export default function Register() {
                 {/* Header */}
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        {t('registerPage.createAccount')}
+                        Create Your Account
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        {t('registerPage.signUpDesc')}
+                        Join the agricultural intelligence platform
                     </p>
                 </div>
 
@@ -131,7 +129,7 @@ export default function Register() {
                         {/* Name Field */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('registerPage.fullName')}
+                                Full Name (Optional)
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -140,17 +138,17 @@ export default function Register() {
                                 <input
                                     id="name"
                                     type="text"
-                                    placeholder={t('registerPage.enterFullName')}
+                                    placeholder="Enter your full name"
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.name ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('name', {
                                         minLength: {
                                             value: 2,
-                                            message: t('registerPage.nameMinLength')
+                                            message: 'Name must be at least 2 characters'
                                         },
                                         maxLength: {
                                             value: 100,
-                                            message: t('profilePage.nameMaxLength')
+                                            message: 'Name must not exceed 100 characters'
                                         }
                                     })}
                                 />
@@ -163,7 +161,7 @@ export default function Register() {
                         {/* Phone Number Field */}
                         <div>
                             <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('registerPage.phoneNumber')}
+                                Phone Number
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -176,10 +174,10 @@ export default function Register() {
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.phone_number ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('phone_number', {
-                                        required: t('registerPage.phoneRequired'),
+                                        required: 'Phone number is required',
                                         pattern: {
                                             value: /^\+[1-9]\d{1,14}$/,
-                                            message: t('registerPage.phoneFormat')
+                                            message: 'Please enter a valid phone number in E.164 format (e.g., +1234567890)'
                                         }
                                     })}
                                 />
@@ -188,14 +186,14 @@ export default function Register() {
                                 <p className="mt-1 text-sm text-red-600">{errors.phone_number.message}</p>
                             )}
                             <p className="mt-1 text-xs text-gray-500">
-                                {t('loginPage.phoneFormatHint')}
+                                Format: +[country code][number] (e.g., +1234567890)
                             </p>
                         </div>
 
                         {/* Password Field */}
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('registerPage.password')}
+                                Password
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -204,14 +202,14 @@ export default function Register() {
                                 <input
                                     id="password"
                                     type={showPassword ? 'text' : 'password'}
-                                    placeholder={t('registerPage.enterPassword')}
+                                    placeholder="Create a strong password"
                                     className={`appearance-none block w-full pl-10 pr-10 py-2 border ${errors.password ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('password', {
-                                        required: t('registerPage.passwordRequired'),
+                                        required: 'Password is required',
                                         minLength: {
                                             value: 8,
-                                            message: t('registerPage.passwordMinLength')
+                                            message: 'Password must be at least 8 characters'
                                         },
                                         validate: {
                                             hasUpperCase: (value) => /[A-Z]/.test(value) || 'Password must contain at least one uppercase letter',
@@ -240,10 +238,10 @@ export default function Register() {
                             {password && passwordStrength && (
                                 <div className="mt-2">
                                     <div className="flex items-center justify-between mb-1">
-                                        <span className="text-xs text-gray-600">{t('registerPage.passwordStrength')}</span>
+                                        <span className="text-xs text-gray-600">Password Strength:</span>
                                         <span className={`text-xs font-medium ${passwordStrength.label === 'Strong' ? 'text-green-600' :
-                                            passwordStrength.label === 'Medium' ? 'text-yellow-600' :
-                                                'text-red-600'
+                                                passwordStrength.label === 'Medium' ? 'text-yellow-600' :
+                                                    'text-red-600'
                                             }`}>
                                             {passwordStrength.label}
                                         </span>
@@ -268,7 +266,7 @@ export default function Register() {
                         {/* Confirm Password Field */}
                         <div>
                             <label htmlFor="confirm_password" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('registerPage.confirmPassword')}
+                                Confirm Password
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -281,8 +279,8 @@ export default function Register() {
                                     className={`appearance-none block w-full pl-10 pr-10 py-2 border ${errors.confirm_password ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('confirm_password', {
-                                        required: t('registerPage.confirmPasswordRequired'),
-                                        validate: (value) => value === password || t('registerPage.passwordsMustMatch')
+                                        required: 'Please confirm your password',
+                                        validate: (value) => value === password || 'Passwords do not match'
                                     })}
                                 />
                                 <button
@@ -313,7 +311,7 @@ export default function Register() {
                             {loading || isSubmitting ? (
                                 <Loader size={20} color="#ffffff" />
                             ) : (
-                                t('registerPage.createAccount')
+                                'Create Account'
                             )}
                         </button>
                     </div>
@@ -321,12 +319,12 @@ export default function Register() {
                     {/* Login Link */}
                     <div className="text-center">
                         <p className="text-sm text-gray-600">
-                            {t('registerPage.alreadyHaveAccount')}{' '}
+                            Already have an account?{' '}
                             <Link
                                 to="/login"
                                 className="font-medium text-blue-600 hover:text-blue-500"
                             >
-                                {t('registerPage.signInHere')}
+                                Sign in here
                             </Link>
                         </p>
                     </div>

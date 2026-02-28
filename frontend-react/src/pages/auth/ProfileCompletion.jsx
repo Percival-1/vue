@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { FaUser, FaMapMarkerAlt, FaSeedling, FaRulerCombined, FaLanguage, FaCheckCircle } from 'react-icons/fa';
 import userService from '../../api/services/userService';
 import { updateUser, selectUser } from '../../store/slices/authSlice';
@@ -21,7 +20,6 @@ import Loader from '../../components/common/Loader';
  * Requirements: 2.1-2.3, 1.9
  */
 export default function ProfileCompletion() {
-    const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
@@ -115,7 +113,7 @@ export default function ProfileCompletion() {
             navigate('/dashboard');
         } catch (err) {
             console.error('Profile completion error:', err);
-            setError(err.message || t('profileCompletionPage.failedSaveProfile'));
+            setError(err.message || 'Failed to save profile. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -158,10 +156,10 @@ export default function ProfileCompletion() {
                         <FaCheckCircle className="h-12 w-12 text-green-500" />
                     </div>
                     <h2 className="mt-2 text-center text-3xl font-extrabold text-gray-900">
-                        {t('profileCompletionPage.completeProfile')}
+                        Complete Your Profile
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        {t('profileCompletionPage.completeProfileDesc')}
+                        Help us personalize your experience by providing some information about your farm
                     </p>
                 </div>
 
@@ -178,7 +176,7 @@ export default function ProfileCompletion() {
                         {/* Name Field */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('profilePage.fullName')} <span className="text-red-500">*</span>
+                                Full Name <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -187,18 +185,18 @@ export default function ProfileCompletion() {
                                 <input
                                     id="name"
                                     type="text"
-                                    placeholder={t('profilePage.enterFullName')}
+                                    placeholder="Enter your full name"
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.name ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('name', {
-                                        required: t('profilePage.nameRequired'),
+                                        required: 'Name is required',
                                         minLength: {
                                             value: 2,
-                                            message: t('profilePage.nameMinLength')
+                                            message: 'Name must be at least 2 characters'
                                         },
                                         maxLength: {
                                             value: 100,
-                                            message: t('profilePage.nameMaxLength')
+                                            message: 'Name must not exceed 100 characters'
                                         }
                                     })}
                                 />
@@ -211,7 +209,7 @@ export default function ProfileCompletion() {
                         {/* Location Field */}
                         <div>
                             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('profilePage.location')} <span className="text-red-500">*</span>
+                                Location <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -224,10 +222,10 @@ export default function ProfileCompletion() {
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.location ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('location', {
-                                        required: t('profilePage.locationRequired'),
+                                        required: 'Location is required',
                                         minLength: {
                                             value: 2,
-                                            message: t('profilePage.locationMinLength')
+                                            message: 'Location must be at least 2 characters'
                                         }
                                     })}
                                 />
@@ -240,7 +238,7 @@ export default function ProfileCompletion() {
                         {/* Crops Field */}
                         <div>
                             <label htmlFor="crops" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('profilePage.cropsLabel')} <span className="text-red-500">*</span>
+                                Crops <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -249,7 +247,7 @@ export default function ProfileCompletion() {
                                 <input
                                     id="crops"
                                     type="text"
-                                    placeholder={t('profilePage.typeCropName')}
+                                    placeholder="Type crop name and press Enter"
                                     value={cropInput}
                                     onChange={(e) => setCropInput(e.target.value)}
                                     onKeyPress={handleCropKeyPress}
@@ -267,8 +265,8 @@ export default function ProfileCompletion() {
                                         onClick={() => addCrop(crop)}
                                         disabled={crops.includes(crop)}
                                         className={`px-3 py-1 text-xs rounded-full ${crops.includes(crop)
-                                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                            : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                                                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                                             }`}
                                     >
                                         {crop}
@@ -302,7 +300,7 @@ export default function ProfileCompletion() {
                                 name="crops"
                                 control={control}
                                 rules={{
-                                    validate: (value) => value.length > 0 || t('profilePage.atLeastOneCrop')
+                                    validate: (value) => value.length > 0 || 'At least one crop is required'
                                 }}
                                 render={() => null}
                             />
@@ -315,7 +313,7 @@ export default function ProfileCompletion() {
                         {/* Land Size Field */}
                         <div>
                             <label htmlFor="land_size" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('profilePage.landSizeAcres')} <span className="text-red-500">*</span>
+                                Land Size (acres) <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -325,18 +323,18 @@ export default function ProfileCompletion() {
                                     id="land_size"
                                     type="number"
                                     step="0.01"
-                                    placeholder={t('profilePage.enterLandSize')}
+                                    placeholder="Enter land size in acres"
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.land_size ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('land_size', {
-                                        required: t('profilePage.landSizeRequired'),
+                                        required: 'Land size is required',
                                         min: {
                                             value: 0.01,
-                                            message: t('profilePage.landSizeMin')
+                                            message: 'Land size must be greater than 0'
                                         },
                                         max: {
                                             value: 10000,
-                                            message: t('profilePage.landSizeMax')
+                                            message: 'Land size seems too large'
                                         }
                                     })}
                                 />
@@ -349,7 +347,7 @@ export default function ProfileCompletion() {
                         {/* Language Field */}
                         <div>
                             <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
-                                {t('profilePage.preferredLang')} <span className="text-red-500">*</span>
+                                Preferred Language <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -360,7 +358,7 @@ export default function ProfileCompletion() {
                                     className={`appearance-none block w-full pl-10 pr-3 py-2 border ${errors.language ? 'border-red-300' : 'border-gray-300'
                                         } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                                     {...register('language', {
-                                        required: t('profilePage.langRequired')
+                                        required: 'Language preference is required'
                                     })}
                                 >
                                     {languages.map((lang) => (
@@ -386,7 +384,7 @@ export default function ProfileCompletion() {
                             {loading || isSubmitting ? (
                                 <Loader size={20} color="#ffffff" />
                             ) : (
-                                t('profileCompletionPage.completeProfile')
+                                'Complete Profile & Continue'
                             )}
                         </button>
                     </div>

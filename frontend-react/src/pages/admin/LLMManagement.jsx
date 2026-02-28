@@ -10,6 +10,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler,
 } from 'chart.js';
 import llmService from '../../api/services/llmService';
 import Loader from '../../components/common/Loader';
@@ -23,7 +24,8 @@ ChartJS.register(
     ArcElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
 );
 
 export default function LLMManagement() {

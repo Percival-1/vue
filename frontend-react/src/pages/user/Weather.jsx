@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import {
     FaCloudSun,
     FaTemperatureHigh,
@@ -52,7 +51,6 @@ ChartJS.register(
  * Requirements: 7.1-7.7
  */
 export default function Weather() {
-    const { t } = useTranslation();
     const profile = useSelector(selectProfile);
 
     // Location state
@@ -124,7 +122,7 @@ export default function Weather() {
             setCurrentWeather(data);
         } catch (err) {
             console.error('Error fetching current weather:', err);
-            setError(t('weatherErrors.failedLoadCurrent'));
+            setError('Failed to load current weather data');
         } finally {
             setLoadingCurrent(false);
         }
@@ -143,7 +141,7 @@ export default function Weather() {
             setForecast({ daily: data });
         } catch (err) {
             console.error('Error fetching forecast:', err);
-            setError(t('weatherErrors.failedLoadForecast'));
+            setError('Failed to load forecast data');
         } finally {
             setLoadingForecast(false);
         }
@@ -241,7 +239,7 @@ export default function Weather() {
             labels,
             datasets: [
                 {
-                    label: t('weatherErrors.maxTemp'),
+                    label: 'Max Temperature (°C)',
                     data: maxTemps,
                     borderColor: 'rgb(239, 68, 68)',
                     backgroundColor: 'rgba(239, 68, 68, 0.1)',
@@ -249,7 +247,7 @@ export default function Weather() {
                     tension: 0.4,
                 },
                 {
-                    label: t('weatherErrors.minTemp'),
+                    label: 'Min Temperature (°C)',
                     data: minTemps,
                     borderColor: 'rgb(59, 130, 246)',
                     backgroundColor: 'rgba(59, 130, 246, 0.1)',
@@ -269,7 +267,7 @@ export default function Weather() {
             },
             title: {
                 display: true,
-                text: t('weatherErrors.chartTitle'),
+                text: '7-Day Temperature Forecast',
             },
         },
         scales: {
@@ -277,7 +275,7 @@ export default function Weather() {
                 beginAtZero: false,
                 title: {
                     display: true,
-                    text: t('weather.temperature') + ' (°C)',
+                    text: 'Temperature (°C)',
                 },
             },
         },
@@ -291,11 +289,11 @@ export default function Weather() {
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">{t('weather.weatherDashboard')}</h1>
+                        <h1 className="text-3xl font-bold text-gray-800">Weather Dashboard</h1>
                         {profile?.location && (
                             <p className="text-sm text-gray-600 mt-1">
                                 <FaMapMarkerAlt className="inline mr-1" />
-                                {t('weather.yourLocation')}: <span className="font-semibold">{profile.location}</span>
+                                Your location: <span className="font-semibold">{profile.location}</span>
                             </p>
                         )}
                     </div>
@@ -307,11 +305,11 @@ export default function Weather() {
                             value={searchLocation}
                             onChange={(e) => setSearchLocation(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && handleLocationChange()}
-                            placeholder={t('weather.searchLocation')}
+                            placeholder="Search other location..."
                             className="w-64"
                         />
                         <Button onClick={handleLocationChange} disabled={isLoading}>
-                            {t('common.search')}
+                            Search
                         </Button>
                         {!isUsingProfileLocation && profile?.location && (
                             <Button
@@ -319,7 +317,7 @@ export default function Weather() {
                                 disabled={isLoading}
                                 className="bg-gray-500 hover:bg-gray-600"
                             >
-                                {t('weather.myLocation')}
+                                My Location
                             </Button>
                         )}
                     </div>
@@ -330,9 +328,9 @@ export default function Weather() {
                     <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
                         <p className="text-sm text-blue-800">
                             <FaMapMarkerAlt className="inline mr-2" />
-                            {t('weather.showingWeatherFor')} <span className="font-semibold">{currentLocation}</span>
+                            Showing weather for: <span className="font-semibold">{currentLocation}</span>
                             {isUsingProfileLocation && (
-                                <span className="ml-2 text-xs bg-blue-200 px-2 py-1 rounded">{t('weather.yourLocation')}</span>
+                                <span className="ml-2 text-xs bg-blue-200 px-2 py-1 rounded">Your Location</span>
                             )}
                         </p>
                     </div>
@@ -357,7 +355,7 @@ export default function Weather() {
                                     <p className="text-sm mt-1">{alert.description || alert.message}</p>
                                     {alert.expires && (
                                         <p className="text-xs mt-2">
-                                            {t('weather.expires')}: {new Date(alert.expires).toLocaleString()}
+                                            Expires: {new Date(alert.expires).toLocaleString()}
                                         </p>
                                     )}
                                 </div>
@@ -369,7 +367,7 @@ export default function Weather() {
 
             {/* Current Weather */}
             <Card>
-                <h2 className="text-xl font-bold mb-4">{t('weather.currentWeather')}</h2>
+                <h2 className="text-xl font-bold mb-4">Current Weather</h2>
                 {loadingCurrent ? (
                     <div className="flex justify-center py-8">
                         <ClipLoader color="#3B82F6" size={40} />
@@ -379,7 +377,7 @@ export default function Weather() {
                         <div className="flex items-center gap-4">
                             <FaCloudSun className="text-5xl text-yellow-500" />
                             <div>
-                                <p className="text-sm text-gray-600">{t('weather.condition')}</p>
+                                <p className="text-sm text-gray-600">Condition</p>
                                 <p className="text-lg font-semibold">
                                     {currentWeather.description || currentWeather.condition || currentWeather.weather}
                                 </p>
@@ -388,13 +386,13 @@ export default function Weather() {
                         <div className="flex items-center gap-4">
                             <FaTemperatureHigh className="text-5xl text-red-500" />
                             <div>
-                                <p className="text-sm text-gray-600">{t('weather.temperature')}</p>
+                                <p className="text-sm text-gray-600">Temperature</p>
                                 <p className="text-lg font-semibold">
                                     {currentWeather.temperature || currentWeather.temp}°C
                                 </p>
                                 {currentWeather.feels_like && (
                                     <p className="text-xs text-gray-500">
-                                        {t('weather.feelsLike')} {currentWeather.feels_like}°C
+                                        Feels like {currentWeather.feels_like}°C
                                     </p>
                                 )}
                             </div>
@@ -402,7 +400,7 @@ export default function Weather() {
                         <div className="flex items-center gap-4">
                             <FaTint className="text-5xl text-blue-500" />
                             <div>
-                                <p className="text-sm text-gray-600">{t('weather.humidity')}</p>
+                                <p className="text-sm text-gray-600">Humidity</p>
                                 <p className="text-lg font-semibold">
                                     {currentWeather.humidity}%
                                 </p>
@@ -411,7 +409,7 @@ export default function Weather() {
                         <div className="flex items-center gap-4">
                             <FaWind className="text-5xl text-gray-500" />
                             <div>
-                                <p className="text-sm text-gray-600">{t('weather.windSpeed')}</p>
+                                <p className="text-sm text-gray-600">Wind Speed</p>
                                 <p className="text-lg font-semibold">
                                     {currentWeather.wind_speed || currentWeather.windSpeed} km/h
                                 </p>
@@ -424,7 +422,7 @@ export default function Weather() {
                         </div>
                     </div>
                 ) : (
-                    <p className="text-gray-500 text-center py-8">{t('weather.noCurrentWeatherData')}</p>
+                    <p className="text-gray-500 text-center py-8">No current weather data available</p>
                 )}
             </Card>
 
@@ -439,7 +437,7 @@ export default function Weather() {
 
             {/* 7-Day Forecast */}
             <Card>
-                <h2 className="text-xl font-bold mb-4">{t('weather.forecast')}</h2>
+                <h2 className="text-xl font-bold mb-4">7-Day Forecast</h2>
                 {loadingForecast ? (
                     <div className="flex justify-center py-8">
                         <ClipLoader color="#3B82F6" size={40} />
@@ -482,7 +480,7 @@ export default function Weather() {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-gray-500 text-center py-8">{t('weather.noForecastData')}</p>
+                    <p className="text-gray-500 text-center py-8">No forecast data available</p>
                 )}
             </Card>
 
@@ -491,7 +489,7 @@ export default function Weather() {
                 <Card>
                     <div className="flex items-center gap-3 mb-4">
                         <FaSeedling className="text-2xl text-green-600" />
-                        <h2 className="text-xl font-bold">{t('weather.insights')}</h2>
+                        <h2 className="text-xl font-bold">Agricultural Insights</h2>
                     </div>
                     {loadingInsights ? (
                         <div className="flex justify-center py-8">
@@ -501,14 +499,14 @@ export default function Weather() {
                         <div className="space-y-4">
                             {insights.recommendation && (
                                 <div className="bg-blue-50 p-4 rounded-lg">
-                                    <h3 className="font-semibold text-blue-700 mb-2">{t('weather.recommendation')}</h3>
+                                    <h3 className="font-semibold text-blue-700 mb-2">Recommendation</h3>
                                     <p className="text-gray-700">{insights.recommendation}</p>
                                 </div>
                             )}
 
                             {insights.suitable_activities && insights.suitable_activities.length > 0 && (
                                 <div>
-                                    <h3 className="font-semibold text-green-700 mb-2">{t('weather.suitableActivities')}</h3>
+                                    <h3 className="font-semibold text-green-700 mb-2">Suitable Activities</h3>
                                     <ul className="list-disc list-inside space-y-1 text-gray-700">
                                         {insights.suitable_activities.map((activity, index) => (
                                             <li key={index}>{activity}</li>
@@ -520,7 +518,7 @@ export default function Weather() {
                             {insights.activities_to_avoid && insights.activities_to_avoid.length > 0 &&
                                 insights.activities_to_avoid[0] !== 'None' && (
                                     <div>
-                                        <h3 className="font-semibold text-orange-700 mb-2">{t('weather.activitiesToAvoid')}</h3>
+                                        <h3 className="font-semibold text-orange-700 mb-2">Activities to Avoid</h3>
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
                                             {insights.activities_to_avoid.map((activity, index) => (
                                                 <li key={index}>{activity}</li>
@@ -531,7 +529,7 @@ export default function Weather() {
 
                             {insights.irrigation_advice && (
                                 <div className="bg-blue-50 p-4 rounded-lg">
-                                    <h3 className="font-semibold text-blue-700 mb-2">{t('weather.irrigationAdvice')}</h3>
+                                    <h3 className="font-semibold text-blue-700 mb-2">Irrigation Advice</h3>
                                     <p className="text-gray-700">{insights.irrigation_advice}</p>
                                 </div>
                             )}
@@ -545,7 +543,7 @@ export default function Weather() {
                                         insights.pest_risk_level === 'Medium' ? 'text-yellow-700' :
                                             'text-green-700'
                                         }`}>
-                                        {t('weather.pestRiskLevel')}: {insights.pest_risk_level}
+                                        Pest Risk Level: {insights.pest_risk_level}
                                     </h3>
                                 </div>
                             )}
@@ -553,7 +551,7 @@ export default function Weather() {
                             {/* Legacy format support */}
                             {insights.recommendations && !insights.recommendation && (
                                 <div>
-                                    <h3 className="font-semibold text-green-700 mb-2">{t('disease.recommendations')}</h3>
+                                    <h3 className="font-semibold text-green-700 mb-2">Recommendations</h3>
                                     <ul className="list-disc list-inside space-y-1 text-gray-700">
                                         {Array.isArray(insights.recommendations) ? (
                                             insights.recommendations.map((rec, index) => (
@@ -567,7 +565,7 @@ export default function Weather() {
                             )}
                             {insights.warnings && (
                                 <div>
-                                    <h3 className="font-semibold text-orange-700 mb-2">{t('weather.warnings')}</h3>
+                                    <h3 className="font-semibold text-orange-700 mb-2">Warnings</h3>
                                     <ul className="list-disc list-inside space-y-1 text-gray-700">
                                         {Array.isArray(insights.warnings) ? (
                                             insights.warnings.map((warning, index) => (
@@ -581,7 +579,7 @@ export default function Weather() {
                             )}
                             {insights.best_practices && (
                                 <div>
-                                    <h3 className="font-semibold text-blue-700 mb-2">{t('weather.bestPractices')}</h3>
+                                    <h3 className="font-semibold text-blue-700 mb-2">Best Practices</h3>
                                     <ul className="list-disc list-inside space-y-1 text-gray-700">
                                         {Array.isArray(insights.best_practices) ? (
                                             insights.best_practices.map((practice, index) => (

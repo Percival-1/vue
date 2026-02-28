@@ -1,5 +1,4 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FaUpload, FaImage, FaTimes, FaLeaf, FaInfoCircle, FaSave, FaShare, FaCamera } from 'react-icons/fa';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import {
@@ -30,7 +29,6 @@ ChartJS.register(
 );
 
 export default function DiseaseDetection() {
-    const { t } = useTranslation();
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -141,7 +139,7 @@ export default function DiseaseDetection() {
                 setError(response.error || 'Analysis failed');
             }
         } catch (err) {
-            setError(err.message || t('diseaseErrors.failedAnalyze'));
+            setError(err.message || 'Failed to analyze image');
         } finally {
             setIsUploading(false);
             setUploadProgress(0);
@@ -164,10 +162,10 @@ export default function DiseaseDetection() {
             if (response.success && response.treatment_info) {
                 setDetailedTreatment(response.treatment_info);
             } else {
-                setError(t('diseaseErrors.failedDetailedTreatment'));
+                setError('Failed to fetch detailed treatment');
             }
         } catch (err) {
-            setError(err.message || t('diseaseErrors.failedDetailedTreatment'));
+            setError(err.message || 'Failed to fetch detailed treatment');
         } finally {
             setIsLoadingTreatment(false);
         }
@@ -190,7 +188,7 @@ export default function DiseaseDetection() {
         const trimmedHistory = history.slice(0, 50);
         localStorage.setItem(historyKey, JSON.stringify(trimmedHistory));
 
-        alert(t('disease.savedToHistory'));
+        alert('Analysis saved to history!');
     };
 
     // Clear selection
@@ -230,7 +228,7 @@ export default function DiseaseDetection() {
             }, 100);
         } catch (err) {
             setError(
-                t('disease.cameraError')
+                'Failed to access camera. Please ensure camera permissions are granted.'
             );
             console.error('Camera access error:', err);
         }
@@ -344,10 +342,10 @@ export default function DiseaseDetection() {
             <div className="mb-6">
                 <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
                     <FaLeaf className="text-green-600" />
-                    {t('disease.diseaseDetection')}
+                    Disease Detection
                 </h1>
                 <p className="text-gray-600 mt-2">
-                    {t('disease.uploadCropImage')}
+                    Upload a crop image to detect diseases and get treatment recommendations
                 </p>
             </div>
 
@@ -363,7 +361,7 @@ export default function DiseaseDetection() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Upload Section */}
-                <Card title={t('disease.uploadImage')}>
+                <Card title="Upload Image">
                     <div className="space-y-4">
                         {/* Camera Modal */}
                         {isCameraOpen && (
@@ -391,7 +389,7 @@ export default function DiseaseDetection() {
                                             className="mt-4"
                                         >
                                             <FaCamera className="mr-2" />
-                                            {t('disease.capturePhoto')}
+                                            Capture Photo
                                         </Button>
                                     </div>
 
@@ -431,7 +429,7 @@ export default function DiseaseDetection() {
                                     <FaImage className="mx-auto text-gray-400 text-5xl" />
                                     <div>
                                         <p className="text-gray-600 mb-3">
-                                            {t('disease.dragDrop')}
+                                            Drag and drop an image here, or
                                         </p>
                                         <div className="flex flex-col sm:flex-row gap-2 justify-center">
                                             <Button
@@ -440,7 +438,7 @@ export default function DiseaseDetection() {
                                                 onClick={() => fileInputRef.current?.click()}
                                             >
                                                 <FaUpload className="mr-2" />
-                                                {t('disease.browseFiles')}
+                                                Browse Files
                                             </Button>
                                             <Button
                                                 variant="outline"
@@ -448,12 +446,12 @@ export default function DiseaseDetection() {
                                                 onClick={handleOpenCamera}
                                             >
                                                 <FaCamera className="mr-2" />
-                                                {t('disease.takePhoto')}
+                                                Take Photo
                                             </Button>
                                         </div>
                                     </div>
                                     <p className="text-xs text-gray-500">
-                                        {t('disease.supportedFormatsDesc')}
+                                        Supported formats: JPEG, PNG, WebP, HEIC (Max 10MB)
                                     </p>
                                 </div>
                             )}
@@ -471,7 +469,7 @@ export default function DiseaseDetection() {
                         {isUploading && (
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between text-sm">
-                                    <span className="text-gray-600">{t('disease.analyzingImage')}</span>
+                                    <span className="text-gray-600">Analyzing image...</span>
                                     <span className="text-gray-900 font-medium">
                                         {uploadProgress}%
                                     </span>
@@ -483,7 +481,7 @@ export default function DiseaseDetection() {
                                     />
                                 </div>
                                 <div className="flex justify-center mt-4">
-                                    <Loader size={40} text={t('disease.processingImage')} />
+                                    <Loader size={40} text="Processing image..." />
                                 </div>
                             </div>
                         )}
@@ -496,17 +494,17 @@ export default function DiseaseDetection() {
                                     className="flex-1"
                                     onClick={handleAnalyze}
                                 >
-                                    {t('disease.analyzeImage')}
+                                    Analyze Image
                                 </Button>
                                 <Button variant="secondary" onClick={handleClear}>
-                                    {t('common.clear')}
+                                    Clear
                                 </Button>
                             </div>
                         )}
 
                         {analysisResult && (
                             <Button variant="secondary" onClick={handleClear} className="w-full">
-                                {t('disease.analyzeAnother')}
+                                Analyze Another Image
                             </Button>
                         )}
                     </div>
@@ -514,7 +512,7 @@ export default function DiseaseDetection() {
 
                 {/* Results Section */}
                 {analysisResult && primaryDisease && (
-                    <Card title={t('disease.results')}>
+                    <Card title="Analysis Results">
                         <div className="space-y-6">
                             {/* Action Buttons */}
                             <div className="flex gap-2">
@@ -524,11 +522,11 @@ export default function DiseaseDetection() {
                                     onClick={handleSaveToHistory}
                                 >
                                     <FaSave className="mr-2" />
-                                    {t('disease.saveToHistory')}
+                                    Save to History
                                 </Button>
                                 <Button variant="outline" size="sm">
                                     <FaShare className="mr-2" />
-                                    {t('common.share')}
+                                    Share
                                 </Button>
                             </div>
 
@@ -551,7 +549,7 @@ export default function DiseaseDetection() {
                                 </div>
                                 {analysisResult.crop_type && (
                                     <p className="text-sm text-blue-700">
-                                        {t('disease.crop')}: {analysisResult.crop_type}
+                                        Crop: {analysisResult.crop_type}
                                     </p>
                                 )}
                             </div>
@@ -559,7 +557,7 @@ export default function DiseaseDetection() {
                             {/* Confidence Score */}
                             <div>
                                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                                    {t('disease.confidenceScore')}
+                                    Confidence Score
                                 </h3>
                                 <div className="flex items-center gap-6">
                                     <div className="w-32 h-32">
@@ -602,7 +600,7 @@ export default function DiseaseDetection() {
                             {primaryDisease.description && (
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                                        {t('common.description')}
+                                        Description
                                     </h3>
                                     <p className="text-gray-700">{primaryDisease.description}</p>
                                 </div>
@@ -612,7 +610,7 @@ export default function DiseaseDetection() {
                             {primaryDisease.affected_parts && primaryDisease.affected_parts.length > 0 && (
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                                        {t('disease.affectedParts')}
+                                        Affected Parts
                                     </h3>
                                     <div className="flex flex-wrap gap-2">
                                         {primaryDisease.affected_parts.map((part, index) => (
@@ -631,7 +629,7 @@ export default function DiseaseDetection() {
                             {primaryDisease.severity && (
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                                        {t('disease.severityLevel')}
+                                        Severity Level
                                     </h3>
                                     <span
                                         className={`inline-block px-4 py-2 rounded-lg text-sm font-semibold ${primaryDisease.severity.toLowerCase() === 'high' ||
@@ -656,7 +654,7 @@ export default function DiseaseDetection() {
                                 loading={isLoadingTreatment}
                             >
                                 <FaInfoCircle className="mr-2" />
-                                {t('disease.getDetailedTreatment')}
+                                Get Detailed Treatment Plan
                             </Button>
                         </div>
                     </Card>
@@ -665,7 +663,7 @@ export default function DiseaseDetection() {
 
             {/* Treatment Recommendations */}
             {analysisResult?.treatment_recommendations && analysisResult.treatment_recommendations.length > 0 && (
-                <Card title={t('disease.treatment')} className="mt-6">
+                <Card title="Treatment Recommendations" className="mt-6">
                     <div className="space-y-4">
                         {analysisResult.treatment_recommendations.map((treatment, index) => (
                             <details key={index} className="border border-gray-200 rounded-lg">
@@ -675,7 +673,7 @@ export default function DiseaseDetection() {
                                 <div className="p-4 pt-0 space-y-3">
                                     {treatment.active_ingredients && treatment.active_ingredients.length > 0 && (
                                         <div>
-                                            <h5 className="font-semibold text-sm mb-1">{t('disease.activeIngredients')}</h5>
+                                            <h5 className="font-semibold text-sm mb-1">Active Ingredients</h5>
                                             <ul className="list-disc list-inside text-sm text-gray-700">
                                                 {treatment.active_ingredients.map((ingredient, i) => (
                                                     <li key={i}>{ingredient}</li>
@@ -685,25 +683,25 @@ export default function DiseaseDetection() {
                                     )}
                                     {treatment.dosage && (
                                         <div>
-                                            <h5 className="font-semibold text-sm mb-1">{t('disease.dosage')}</h5>
+                                            <h5 className="font-semibold text-sm mb-1">Dosage</h5>
                                             <p className="text-sm text-gray-700">{treatment.dosage}</p>
                                         </div>
                                     )}
                                     {treatment.application_method && (
                                         <div>
-                                            <h5 className="font-semibold text-sm mb-1">{t('disease.applicationMethod')}</h5>
+                                            <h5 className="font-semibold text-sm mb-1">Application Method</h5>
                                             <p className="text-sm text-gray-700">{treatment.application_method}</p>
                                         </div>
                                     )}
                                     {treatment.timing && (
                                         <div>
-                                            <h5 className="font-semibold text-sm mb-1">{t('disease.timing')}</h5>
+                                            <h5 className="font-semibold text-sm mb-1">Timing</h5>
                                             <p className="text-sm text-gray-700">{treatment.timing}</p>
                                         </div>
                                     )}
                                     {treatment.precautions && treatment.precautions.length > 0 && (
                                         <div>
-                                            <h5 className="font-semibold text-sm mb-1">{t('disease.precautions')}</h5>
+                                            <h5 className="font-semibold text-sm mb-1">Precautions</h5>
                                             <ul className="list-disc list-inside text-sm text-gray-700">
                                                 {treatment.precautions.map((precaution, i) => (
                                                     <li key={i}>{precaution}</li>
@@ -714,7 +712,7 @@ export default function DiseaseDetection() {
                                     {treatment.cost_estimate && (
                                         <div className="pt-2">
                                             <span className="inline-block px-3 py-1 bg-blue-50 border border-blue-200 rounded text-sm">
-                                                {t('disease.cost')}: {treatment.cost_estimate}
+                                                Cost: {treatment.cost_estimate}
                                             </span>
                                         </div>
                                     )}
@@ -727,7 +725,7 @@ export default function DiseaseDetection() {
 
             {/* Prevention Strategies */}
             {analysisResult?.prevention_strategies && analysisResult.prevention_strategies.length > 0 && (
-                <Card title={t('disease.preventionStrategies')} className="mt-6">
+                <Card title="Prevention Strategies" className="mt-6">
                     <ul className="list-disc list-inside space-y-2 text-gray-700">
                         {analysisResult.prevention_strategies.map((strategy, index) => (
                             <li key={index}>{strategy}</li>
@@ -738,7 +736,7 @@ export default function DiseaseDetection() {
 
             {/* Alternative Diseases Chart */}
             {analysisResult?.diseases && analysisResult.diseases.length > 1 && (
-                <Card title={t('disease.confidenceDistribution')} className="mt-6">
+                <Card title="Confidence Distribution" className="mt-6">
                     <div className="h-64">
                         {getAlternativesChartData() && (
                             <Bar
@@ -773,7 +771,7 @@ export default function DiseaseDetection() {
 
             {/* Detailed Treatment */}
             {detailedTreatment && (
-                <Card title={t('disease.detailedTreatmentInfo')} className="mt-6">
+                <Card title="Detailed Treatment Information" className="mt-6">
                     <div className="prose max-w-none">
                         <pre className="whitespace-pre-wrap text-sm text-gray-700 bg-gray-50 p-4 rounded">
                             {JSON.stringify(detailedTreatment, null, 2)}
@@ -784,28 +782,28 @@ export default function DiseaseDetection() {
 
             {/* Analysis Metadata */}
             {analysisResult && (
-                <Card title={t('disease.analysisMetadata')} className="mt-6">
+                <Card title="Analysis Metadata" className="mt-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
-                            <p className="text-xs text-gray-500">{t('disease.analysisTime')}</p>
+                            <p className="text-xs text-gray-500">Analysis Time</p>
                             <p className="text-sm font-medium">
                                 {visionService.formatTimestamp(analysisResult.timestamp)}
                             </p>
                         </div>
                         <div>
-                            <p className="text-xs text-gray-500">{t('disease.processingTime')}</p>
+                            <p className="text-xs text-gray-500">Processing Time</p>
                             <p className="text-sm font-medium">
                                 {analysisResult.processing_time?.toFixed(2)}s
                             </p>
                         </div>
                         {analysisResult.crop_type && (
                             <div>
-                                <p className="text-xs text-gray-500">{t('disease.cropType')}</p>
+                                <p className="text-xs text-gray-500">Crop Type</p>
                                 <p className="text-sm font-medium">{analysisResult.crop_type}</p>
                             </div>
                         )}
                         <div>
-                            <p className="text-xs text-gray-500">{t('disease.modelUsed')}</p>
+                            <p className="text-xs text-gray-500">Model Used</p>
                             <p className="text-sm font-medium">{analysisResult.model_used}</p>
                         </div>
                     </div>
