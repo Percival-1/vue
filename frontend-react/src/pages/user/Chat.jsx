@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { chatService } from '../../api/services';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { MessageList, ChatInput, ChatHeader } from '../../components/chat';
@@ -18,6 +19,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export default function Chat() {
     // Get current user
     const { user, loading: userLoading } = useCurrentUser();
+    const { t } = useTranslation();
 
     // State management
     const [sessionId, setSessionId] = useLocalStorage('chatSessionId', null);
@@ -35,7 +37,7 @@ export default function Chat() {
     const initializeNewSession = async () => {
         if (!user || !user.id) {
             console.error('User data missing:', { user, hasId: !!user?.id });
-            setError('User data not available. Please refresh the page.');
+            setError(t('chatErrors.userDataNotAvailable'));
             return;
         }
 
@@ -60,7 +62,7 @@ export default function Chat() {
         } catch (err) {
             console.error('=== SESSION INITIALIZATION FAILED ===');
             console.error('Error:', err);
-            setError(err.message || 'Failed to initialize chat session');
+            setError(err.message || t('chatErrors.failedInitSession'));
         } finally {
             setLoading(false);
         }
@@ -117,7 +119,7 @@ export default function Chat() {
      */
     const handleSendMessage = async ({ message, image }) => {
         if (!sessionId) {
-            setError('No active session. Please refresh the page.');
+            setError(t('chatErrors.noActiveSession'));
             return;
         }
 
@@ -169,7 +171,7 @@ export default function Chat() {
         } catch (err) {
             console.error('=== SEND MESSAGE FAILED ===');
             console.error('Error:', err);
-            setError(err.message || 'Failed to send message');
+            setError(err.message || t('chatErrors.failedSendMessage'));
         } finally {
             setIsSending(false);
         }
@@ -186,7 +188,7 @@ export default function Chat() {
             const blob = await chatService.exportHistory(sessionId);
             chatService.downloadHistory(blob, `chat-${sessionId}-${Date.now()}.json`);
         } catch (err) {
-            setError(err.message || 'Failed to export chat history');
+            setError(err.message || t('chatErrors.failedExportHistory'));
         }
     };
 
@@ -204,7 +206,7 @@ export default function Chat() {
     const handleEndSession = async () => {
         if (!sessionId) return;
 
-        const confirmed = window.confirm('Are you sure you want to end this chat session? This will clear your chat history.');
+        const confirmed = window.confirm(t('chat.endSessionConfirm'));
         if (!confirmed) return;
 
         try {
@@ -213,7 +215,7 @@ export default function Chat() {
             setMessages([]);
             setError(null);
         } catch (err) {
-            setError(err.message || 'Failed to end session');
+            setError(err.message || t('chatErrors.failedEndSession'));
         }
     };
 
@@ -233,7 +235,7 @@ export default function Chat() {
     if (loading || userLoading) {
         return (
             <div className="flex items-center justify-center h-full">
-                <Loader text={userLoading ? "Loading user data..." : "Initializing chat session..."} />
+                <Loader text={userLoading ? t('chat.loadingUserData') : t('chat.initializingChat')} />
             </div>
         );
     }
@@ -242,7 +244,7 @@ export default function Chat() {
     if (!user) {
         return (
             <div className="flex items-center justify-center h-full">
-                <ErrorAlert message="Unable to load user data. Please refresh the page." />
+                <ErrorAlert message={t('chatErrors.unableLoadUserData')} />
             </div>
         );
     }
@@ -270,7 +272,7 @@ export default function Chat() {
             {/* Loading History */}
             {isLoadingHistory && (
                 <div className="p-4 text-center">
-                    <Loader size={30} text="Loading chat history..." />
+                    <Loader size={30} text={t('chat.loadingChatHistory')} />
                 </div>
             )}
 
@@ -279,9 +281,9 @@ export default function Chat() {
                 <div className="flex-1 flex items-center justify-center bg-gray-50">
                     <div className="text-center max-w-md px-4">
                         <div className="text-6xl mb-4">💬</div>
-                        <h3 className="text-2xl font-bold text-gray-800 mb-2">Welcome to Chat Assistant</h3>
+                        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t('chat.welcomeChat')}</h3>
                         <p className="text-gray-600 mb-6">
-                            Get instant answers to your agricultural questions. Start a new session to begin chatting with our AI assistant.
+                            {t('chat.welcomeChatDesc')}
                         </p>
                         <Button
                             variant="primary"
@@ -289,7 +291,7 @@ export default function Chat() {
                             onClick={handleStartSession}
                         >
                             <FaPlus size={16} className="mr-2" />
-                            Start New Session
+                            {t('chat.startNewSessionBtn')}
                         </Button>
                     </div>
                 </div>

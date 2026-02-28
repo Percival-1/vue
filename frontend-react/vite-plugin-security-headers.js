@@ -40,7 +40,7 @@ export default function securityHeadersPlugin() {
                     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
                     "font-src 'self' https://fonts.gstatic.com",
                     "img-src 'self' data: https: blob:",
-                    "connect-src 'self' http://localhost:8000 ws://localhost:8000 https://api.openweathermap.org",
+                    "connect-src 'self' http://localhost:8000 http://10.84.0.98:8000 ws://localhost:8000 ws://10.84.0.98:8000 https://api.openweathermap.org https://router.project-osrm.org",
                     "media-src 'self' blob:",
                     "object-src 'none'",
                     "base-uri 'self'",
