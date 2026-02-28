@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
     FaSearch,
     FaFilter,
@@ -30,6 +31,7 @@ import { Card, ErrorAlert, Input, Button } from '../../components/common';
  * Requirements: 9.1-9.7
  */
 export default function Schemes() {
+    const { t } = useTranslation();
     const profile = useSelector(selectProfile);
 
     // Search and filter state
@@ -313,7 +315,7 @@ export default function Schemes() {
                             size="sm"
                             onClick={() => handleViewDetails(scheme)}
                         >
-                            View Details
+                            {t('schemes.viewDetails')}
                         </Button>
                     </div>
                 </div>
@@ -329,9 +331,9 @@ export default function Schemes() {
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">Government Schemes</h1>
+                        <h1 className="text-3xl font-bold text-gray-800">{t('schemes.governmentSchemes')}</h1>
                         <p className="text-sm text-gray-600 mt-1">
-                            Discover subsidies and benefits you're eligible for
+                            {t('schemes.discoverSchemes')}
                         </p>
                     </div>
 
@@ -343,7 +345,7 @@ export default function Schemes() {
                             onClick={() => setActiveView('search')}
                         >
                             <FaSearch className="mr-2" />
-                            Search
+                            {t('common.search')}
                         </Button>
                         <Button
                             variant={activeView === 'recommendations' ? 'primary' : 'outline'}
@@ -356,7 +358,7 @@ export default function Schemes() {
                             }}
                         >
                             <FaInfoCircle className="mr-2" />
-                            Recommendations
+                            {t('schemes.recommendations')}
                         </Button>
                     </div>
                 </div>
@@ -379,13 +381,13 @@ export default function Schemes() {
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                        placeholder="Search schemes by name, keyword, or benefit..."
+                                        placeholder={t('schemes.searchForSchemes')}
                                         icon={<FaSearch />}
                                     />
                                 </div>
                                 <Button onClick={handleSearch} disabled={isLoading}>
                                     <FaSearch className="mr-2" />
-                                    Search
+                                    {t('common.search')}
                                 </Button>
                             </div>
 
@@ -400,7 +402,7 @@ export default function Schemes() {
                                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         disabled={isLoading}
                                     >
-                                        <option value="">All Categories</option>
+                                        <option value="">{t('schemes.allCategories')}</option>
                                         {CATEGORIES.map((cat) => (
                                             <option key={cat} value={cat}>{cat}</option>
                                         ))}
@@ -416,7 +418,7 @@ export default function Schemes() {
                                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         disabled={isLoading}
                                     >
-                                        <option value="">All Types</option>
+                                        <option value="">{t('schemes.allTypes')}</option>
                                         {TYPES.map((type) => (
                                             <option key={type} value={type}>{type}</option>
                                         ))}
@@ -433,7 +435,7 @@ export default function Schemes() {
                                     />
                                     <label htmlFor="bookmarks-only" className="text-sm text-gray-700">
                                         <FaBookmark className="inline mr-1 text-yellow-500" />
-                                        Bookmarks Only
+                                        {t('schemes.bookmarksOnly')}
                                     </label>
                                 </div>
                             </div>
@@ -455,8 +457,8 @@ export default function Schemes() {
                                 <FaSearch className="text-6xl text-gray-300 mx-auto mb-4" />
                                 <p className="text-gray-500">
                                     {showBookmarksOnly
-                                        ? 'No bookmarked schemes yet. Start exploring and bookmark schemes you\'re interested in!'
-                                        : 'No schemes found. Try different search terms or filters.'}
+                                        ? t('schemes.noSchemesBookmarks')
+                                        : t('schemes.noSchemesSearch')}
                                 </p>
                             </div>
                         </Card>
@@ -469,18 +471,18 @@ export default function Schemes() {
                 <>
                     <Card>
                         <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-bold">Personalized Recommendations</h2>
+                            <h2 className="text-xl font-bold">{t('schemes.personalizedRecommendations')}</h2>
                             <Button
                                 size="sm"
                                 onClick={fetchRecommendations}
                                 disabled={loadingRecommendations}
                             >
-                                Refresh
+                                {t('common.refresh')}
                             </Button>
                         </div>
                         <p className="text-sm text-gray-600">
-                            Based on your profile: {profile?.location && `${profile.location}, `}
-                            {profile?.crops && `Crops: ${profile.crops.join(', ')}`}
+                            {t('schemes.basedOnProfile')} {profile?.location && `${profile.location}, `}
+                            {profile?.crops && `${t('schemes.cropsList', { crops: profile.crops.join(', ') })}`}
                         </p>
                     </Card>
 
@@ -497,7 +499,7 @@ export default function Schemes() {
                             <div className="text-center py-12">
                                 <FaInfoCircle className="text-6xl text-gray-300 mx-auto mb-4" />
                                 <p className="text-gray-500">
-                                    No recommendations available. Complete your profile to get personalized scheme recommendations.
+                                    {t('schemes.noRecommendations')}
                                 </p>
                             </div>
                         </Card>
@@ -514,7 +516,7 @@ export default function Schemes() {
                         size="sm"
                         onClick={() => setActiveView('search')}
                     >
-                        ← Back to Search
+                        ← {t('schemes.backToSearch')}
                     </Button>
 
                     {/* Scheme Details Card */}
@@ -545,16 +547,16 @@ export default function Schemes() {
 
                             {/* Description */}
                             <div>
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('common.description')}</h3>
                                 <p className="text-gray-700">
-                                    {selectedScheme.description || selectedScheme.summary || 'No description available'}
+                                    {selectedScheme.description || selectedScheme.summary || t('schemes.noDescription')}
                                 </p>
                             </div>
 
                             {/* Benefits */}
                             {selectedScheme.benefits && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Benefits</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('schemes.benefits')}</h3>
                                     {Array.isArray(selectedScheme.benefits) ? (
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
                                             {selectedScheme.benefits.map((benefit, index) => (
@@ -570,7 +572,7 @@ export default function Schemes() {
                             {/* Eligibility Criteria */}
                             {selectedScheme.eligibility_criteria && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Eligibility Criteria</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('schemes.eligibilityCriteria')}</h3>
                                     {Array.isArray(selectedScheme.eligibility_criteria) ? (
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
                                             {selectedScheme.eligibility_criteria.map((criteria, index) => (
@@ -588,7 +590,7 @@ export default function Schemes() {
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                                         <FaFileAlt className="inline mr-2" />
-                                        Required Documents
+                                        {t('schemes.requiredDocuments')}
                                     </h3>
                                     {Array.isArray(selectedScheme.required_documents) ? (
                                         <ul className="list-disc list-inside space-y-1 text-gray-700">
@@ -605,7 +607,7 @@ export default function Schemes() {
                             {/* Application Process */}
                             {selectedScheme.application_process && (
                                 <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Application Process</h3>
+                                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('schemes.applicationProcess')}</h3>
                                     {Array.isArray(selectedScheme.application_process) ? (
                                         <ol className="list-decimal list-inside space-y-1 text-gray-700">
                                             {selectedScheme.application_process.map((step, index) => (
@@ -628,25 +630,25 @@ export default function Schemes() {
                                         className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                                     >
                                         <FaExternalLinkAlt className="mr-2" />
-                                        Apply Online
+                                        {t('schemes.applyOnline')}
                                     </a>
                                 </div>
                             )}
 
                             {/* Eligibility Checker */}
                             <div className="border-t pt-6">
-                                <h3 className="text-lg font-semibold text-gray-900 mb-4">Check Your Eligibility</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('schemes.checkYourEligibility')}</h3>
                                 <Button
                                     onClick={handleCheckEligibility}
                                     disabled={loadingEligibility || !profile}
                                     loading={loadingEligibility}
                                 >
-                                    Check Eligibility
+                                    {t('schemes.checkEligibility')}
                                 </Button>
 
                                 {!profile && (
                                     <p className="text-sm text-gray-500 mt-2">
-                                        Complete your profile to check eligibility
+                                        {t('schemes.completeProfileForEligibility')}
                                     </p>
                                 )}
 
@@ -668,15 +670,15 @@ export default function Schemes() {
                                                     : 'text-red-800'
                                                     }`}>
                                                     {eligibilityResult.eligible || eligibilityResult.is_eligible
-                                                        ? 'You are eligible for this scheme!'
-                                                        : 'You are not eligible for this scheme'}
+                                                        ? t('schemes.youAreEligibleDetailed')
+                                                        : t('schemes.notEligibleDetailed')}
                                                 </h4>
                                                 {eligibilityResult.reason && (
                                                     <p className="text-sm text-gray-700">{eligibilityResult.reason}</p>
                                                 )}
                                                 {eligibilityResult.missing_criteria && eligibilityResult.missing_criteria.length > 0 && (
                                                     <div className="mt-2">
-                                                        <p className="text-sm font-medium text-gray-700">Missing criteria:</p>
+                                                        <p className="text-sm font-medium text-gray-700">{t('schemes.missingCriteria')}</p>
                                                         <ul className="list-disc list-inside text-sm text-gray-600 mt-1">
                                                             {eligibilityResult.missing_criteria.map((criteria, index) => (
                                                                 <li key={index}>{criteria}</li>

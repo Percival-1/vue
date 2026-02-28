@@ -142,10 +142,11 @@ export default function Dashboard() {
             setSchemesError(null);
             try {
                 const data = await schemeService.getRecommendations(profile);
-                // Ensure schemes is always an array
+                // Backend returns { success: true, recommendations: [...] }
                 const schemesArray = Array.isArray(data)
                     ? data
-                    : (Array.isArray(data.schemes) ? data.schemes : []);
+                    : (Array.isArray(data.recommendations) ? data.recommendations
+                        : (Array.isArray(data.schemes) ? data.schemes : []));
                 setSchemes(schemesArray);
                 setStats(prev => ({ ...prev, activeSchemes: schemesArray.length }));
             } catch (error) {
